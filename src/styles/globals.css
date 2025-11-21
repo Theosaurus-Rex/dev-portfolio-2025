@@ -1,3 +1,12 @@
+/* Import Kanit font from Fontsource */
+@import "@fontsource/kanit/400.css";
+@import "@fontsource/kanit/500.css";
+@import "@fontsource/kanit/600.css";
+@import "@fontsource/kanit/700.css";
+
+/* Import Climate Crisis font from Fontsource */
+@import "@fontsource/climate-crisis/400.css";
+
 @import "tailwindcss";
 
 @plugin '@tailwindcss/typography';

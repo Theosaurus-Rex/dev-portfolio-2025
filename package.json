@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource/climate-crisis": "^5.2.11",
+    "@fontsource/kanit": "^5.2.8",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
     "astro": "^5.16.0"

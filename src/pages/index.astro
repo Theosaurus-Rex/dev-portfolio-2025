@@ -1,11 +1,20 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+	<div class="min-h-screen bg-cream flex items-center justify-center">
+		<div class="text-center space-y-4 p-8">
+			<h1 class="text-6xl font-bold text-pink">Tailwind CSS v4 Test</h1>
+			<p class="text-2xl text-blue">Custom color palette is working!</p>
+			<div class="flex gap-4 justify-center mt-8">
+				<div class="w-20 h-20 bg-pink border-4 border-black rounded-md"></div>
+				<div class="w-20 h-20 bg-lime border-4 border-black rounded-md"></div>
+				<div class="w-20 h-20 bg-blue border-4 border-black rounded-md"></div>
+				<div class="w-20 h-20 bg-orange border-4 border-black rounded-md"></div>
+				<div class="w-20 h-20 bg-purple border-4 border-black rounded-md"></div>
+			</div>
+			<p class="text-outline-mobile text-4xl font-bold text-orange mt-8">Text Outline Test</p>
+		</div>
+	</div>
 </Layout>

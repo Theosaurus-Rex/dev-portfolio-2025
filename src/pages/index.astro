@@ -1,104 +1,141 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Pill from '@/components/Pill.astro';
-import PageFooter from '@/components/PageFooter.astro';
-import PostPreview from '@/components/PostPreview.astro';
-import TalkPreview from '@/components/TalkPreview.astro';
-import ProjectPreview from '@/components/ProjectPreview.astro';
 import TechStack from '@/components/TechStack.astro';
-import { getCollection } from 'astro:content';
-
-// Test content collections import
-const blogPosts = await getCollection('blog');
-const talks = await getCollection('talks');
-const projects = await getCollection('projects');
+import Pill from '@/components/Pill.astro';
 ---
 
-<BaseLayout title="Home" description="Portfolio and blog of Theo Harris, a full stack developer from Sydney, NSW">
-	<div class="flex items-center justify-center min-h-screen">
-		<div class="text-center space-y-6 p-8">
-			<h1 class="text-6xl font-bold text-pink font-kanit">Tailwind CSS v4 Test</h1>
-			<p class="text-2xl text-blue font-kanit">Custom color palette is working!</p>
+<BaseLayout title="Home" description="Full stack developer and technical consultant based in Sydney, NSW">
+  <main class="flex flex-col pt-4 bg-cream min-h-screen lg:px-24">
+    <!-- Hero Section -->
+    <section>
+      <h1 class="sr-only">
+        'Sup, I'm Theo, a web developer based out of Sydney, NSW.
+      </h1>
 
-			<div class="flex gap-4 justify-center mt-8">
-				<div class="w-20 h-20 bg-pink border-4 border-black rounded-md"></div>
-				<div class="w-20 h-20 bg-lime border-4 border-black rounded-md"></div>
-				<div class="w-20 h-20 bg-blue border-4 border-black rounded-md"></div>
-				<div class="w-20 h-20 bg-orange border-4 border-black rounded-md"></div>
-				<div class="w-20 h-20 bg-purple border-4 border-black rounded-md"></div>
-			</div>
+      <!-- Mobile Image -->
+      <div class="lg:hidden">
+        <img
+          src="/images/Header.png"
+          alt="'Sup, I'm Theo, a web developer based out of Sydney, NSW."
+          width="946"
+          height="819"
+          loading="eager"
+          class="w-full"
+        />
+      </div>
 
-			<p class="text-outline-mobile text-4xl font-bold text-orange mt-8 font-kanit">Text Outline Test</p>
+      <!-- Desktop Image -->
+      <div class="hidden lg:block">
+        <img
+          src="/images/HeaderDesktop.png"
+          alt="'Sup, I'm Theo, and I work as a web developer based in Sydney"
+          width="3500"
+          height="1774"
+          loading="eager"
+          class="w-full"
+        />
+      </div>
+    </section>
 
-			<div class="mt-12 space-y-4">
-				<h2 class="text-5xl font-bold text-purple font-climate-crisis uppercase">Climate Crisis Font</h2>
-				<p class="text-xl font-kanit font-normal text-black">Kanit Font - Regular (400)</p>
-				<p class="text-xl font-kanit font-medium text-black">Kanit Font - Medium (500)</p>
-				<p class="text-xl font-kanit font-semibold text-black">Kanit Font - Semibold (600)</p>
-				<p class="text-xl font-kanit font-bold text-black">Kanit Font - Bold (700)</p>
-			</div>
+    <!-- Bio Sections -->
+    <section class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-x-4 lg:space-y-0 p-4 lg:items-stretch">
+      <div class="bg-blue p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
+        <p class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-4xl">
+          I've been a full stack developer and technical consultant for 3+
+          years, and I have a passion for the web as a storytelling medium.
+        </p>
+      </div>
+      <div class="bg-pink p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
+        <p class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-4xl">
+          I care deeply about equal access to the web for everyone, and work
+          hard to create digital experiences that are both accessible and
+          enjoyable.
+        </p>
+      </div>
+    </section>
 
-			<div class="mt-12 p-6 bg-white border-4 border-black rounded-md">
-				<h2 class="text-3xl font-bold text-lime mb-4 font-kanit">Content Collections Test</h2>
-				<div class="space-y-2 text-left">
-					<p class="text-lg font-kanit">📝 Blog Posts: <span class="font-bold">{blogPosts.length}</span></p>
-					<p class="text-lg font-kanit">🎤 Talks: <span class="font-bold">{talks.length}</span></p>
-					<p class="text-lg font-kanit">💼 Projects: <span class="font-bold">{projects.length}</span></p>
-					<p class="text-sm text-gray-600 mt-4 font-kanit italic">Content collections are configured and ready!</p>
-				</div>
-			</div>
+    <!-- Tech Stack Section -->
+    <section class="overflow-hidden">
+      <div class="flex items-center w-full">
+        <h2 class="font-climate-crisis text-orange uppercase font-bold text-4xl md:text-6xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet tracking-wider">
+          Stack
+        </h2>
+        <hr class="border md:border-2 border-black w-full" />
+      </div>
+      <TechStack />
+    </section>
 
-			<div class="mt-12">
-				<h2 class="text-3xl font-bold text-orange mb-4 font-kanit">Pill Component Test</h2>
-				<ul class="flex flex-wrap gap-2 justify-center">
-					<Pill text="TypeScript" />
-					<Pill text="React" />
-					<Pill text="Astro" />
-					<Pill text="Tailwind CSS" />
-					<Pill text="Elixir" />
-				</ul>
-			</div>
-		</div>
-	</div>
+    <!-- Work Experience Section -->
+    <section>
+      <div class="flex items-center w-full">
+        <h2 class="font-climate-crisis text-blue uppercase font-bold text-4xl md:text-6xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet tracking-wider">
+          Work
+        </h2>
+        <hr class="border md:border-2 border-black w-full" />
+      </div>
+      <div class="m-4 mt-0 flex flex-col xl:flex-row gap-4">
+        <!-- Job 1: Alembic -->
+        <div class="bg-purple p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
+          <h3 class="text-2xl font-bold uppercase italic">
+            Full Stack Developer
+          </h3>
+          <p class="font-bold italic">@ Alembic, 2022 - Present</p>
+          <p class="font-medium">
+            Developed several rapid prototypes in small, agile teams for
+            greenfield projects across several different business domains,
+            including education, natural resources, and automotive services.
+          </p>
+          <ul class="flex flex-wrap gap-1.5 mt-2">
+            <Pill text="JavaScript" />
+            <Pill text="React" />
+            <Pill text="Elixir" />
+            <Pill text="Phoenix" />
+            <Pill text="LiveView" />
+            <Pill text="Tailwind" />
+            <Pill text="Ash" />
+          </ul>
+        </div>
 
-	<!-- Preview Components Test Section -->
-	<div class="container mx-auto px-4 py-12">
-		<h2 class="text-5xl font-bold text-pink font-climate-crisis uppercase mb-8">Preview Components Test</h2>
+        <!-- Job 2: Engage Squared -->
+        <div class="bg-pink p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
+          <h3 class="text-2xl font-bold uppercase italic">
+            M365 Developer
+          </h3>
+          <p class="font-bold italic">@ Engage Squared, 2021 - 2022</p>
+          <p class="font-medium">
+            Worked in project teams alongside consultants to deliver solutions
+            across various Microsoft ecosystem platforms, including
+            SharePoint, MS Teams and Power Automate Flow.
+          </p>
+          <ul class="flex flex-wrap gap-1.5 mt-2">
+            <Pill text="JavaScript" />
+            <Pill text="React" />
+            <Pill text="SPFx" />
+            <Pill text="Power Automate" />
+          </ul>
+        </div>
 
-		<!-- Post Preview -->
-		<section class="mb-12">
-			<h3 class="text-3xl font-bold font-kanit mb-4">Blog Post Preview</h3>
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{blogPosts.slice(0, 3).map((post, index) => (
-					<PostPreview post={post} index={index} />
-				))}
-			</div>
-		</section>
-
-		<!-- Talk Preview -->
-		<section class="mb-12">
-			<h3 class="text-3xl font-bold font-kanit mb-4">Talk Preview</h3>
-			<div class="divide-y divide-gray-200">
-				{talks.slice(0, 2).map((talk) => (
-					<TalkPreview talk={talk} />
-				))}
-			</div>
-		</section>
-
-		<!-- Project Preview -->
-		<section class="mb-12">
-			<h3 class="text-3xl font-bold font-kanit mb-4">Project Preview</h3>
-			{projects.map((project) => (
-				<ProjectPreview project={project} />
-			))}
-		</section>
-
-		<!-- TechStack Carousel -->
-		<section class="mb-12">
-			<h3 class="text-3xl font-bold font-kanit mb-4">Tech Stack Carousel</h3>
-			<TechStack />
-		</section>
-	</div>
-
-	<PageFooter />
+        <!-- Job 3: RedHill Education -->
+        <div class="bg-orange p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
+          <h3 class="text-2xl font-bold uppercase italic">
+            Web Developer
+          </h3>
+          <p class="font-bold italic">
+            @ RedHill Education, JUL - AUG 2021
+          </p>
+          <p class="font-medium">
+            Over the course of 3 weeks, rebuilt the existing staff intranet
+            using Google Pages. Delivered technical documentation to ensure
+            smooth handover of the implemented solution to the internal staff
+            at RedHill after my contract was completed.
+          </p>
+          <ul class="flex flex-wrap gap-1.5 mt-2">
+            <Pill text="HTML" />
+            <Pill text="CSS" />
+            <Pill text="Google Pages" />
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
 </BaseLayout>

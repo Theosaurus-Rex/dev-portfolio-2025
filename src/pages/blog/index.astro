@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostPreview from '@/components/PostPreview.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+---
+
+<BaseLayout title="Blog" description="Articles about web development and technology">
+  <main class="flex flex-col bg-cream min-h-screen">
+    <h1 class="font-climate-crisis text-orange uppercase font-bold text-6xl lg:text-8xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet lg:text-outline-desktop tracking-wider text-center">
+      Blog Posts
+    </h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-10 mb-10">
+      {posts.map((post, index) => (
+        <PostPreview post={post} index={index} />
+      ))}
+    </div>
+  </main>
+</BaseLayout>

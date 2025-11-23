@@ -42,7 +42,7 @@
     </nav>
 </div>
 
-<script>
+<script is:inline>
     // Wait for DOM to be ready
     document.addEventListener('DOMContentLoaded', () => {
         const toggle = document.getElementById("menu-toggle");
@@ -51,6 +51,11 @@
         const line1 = document.getElementById("line1");
         const line2 = document.getElementById("line2");
         const line3 = document.getElementById("line3");
+
+        // Exit if elements don't exist
+        if (!toggle || !menu || !panel || !line1 || !line2 || !line3) {
+            return;
+        }
 
         let isOpen = false;
 

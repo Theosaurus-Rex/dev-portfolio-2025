@@ -2,6 +2,9 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Pill from '@/components/Pill.astro';
 import PageFooter from '@/components/PageFooter.astro';
+import PostPreview from '@/components/PostPreview.astro';
+import TalkPreview from '@/components/TalkPreview.astro';
+import ProjectPreview from '@/components/ProjectPreview.astro';
 import { getCollection } from 'astro:content';
 
 // Test content collections import
@@ -56,5 +59,39 @@ const projects = await getCollection('projects');
 			</div>
 		</div>
 	</div>
+
+	<!-- Preview Components Test Section -->
+	<div class="container mx-auto px-4 py-12">
+		<h2 class="text-5xl font-bold text-pink font-climate-crisis uppercase mb-8">Preview Components Test</h2>
+
+		<!-- Post Preview -->
+		<section class="mb-12">
+			<h3 class="text-3xl font-bold font-kanit mb-4">Blog Post Preview</h3>
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				{blogPosts.slice(0, 3).map((post, index) => (
+					<PostPreview post={post} index={index} />
+				))}
+			</div>
+		</section>
+
+		<!-- Talk Preview -->
+		<section class="mb-12">
+			<h3 class="text-3xl font-bold font-kanit mb-4">Talk Preview</h3>
+			<div class="divide-y divide-gray-200">
+				{talks.slice(0, 2).map((talk) => (
+					<TalkPreview talk={talk} />
+				))}
+			</div>
+		</section>
+
+		<!-- Project Preview -->
+		<section class="mb-12">
+			<h3 class="text-3xl font-bold font-kanit mb-4">Project Preview</h3>
+			{projects.map((project) => (
+				<ProjectPreview project={project} />
+			))}
+		</section>
+	</div>
+
 	<PageFooter />
 </BaseLayout>

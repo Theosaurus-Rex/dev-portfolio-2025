@@ -1,0 +1,27 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectPreview from '@/components/ProjectPreview.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+---
+
+<BaseLayout title="Projects" description="Portfolio of web development projects">
+  <main class="flex flex-col items-center px-4 lg:px-24">
+    <h1 class="text-6xl font-bold text-gray-800 text-center my-8">
+      Projects
+    </h1>
+    <div class="flex flex-col gap-6 w-full max-w-4xl">
+      {projects.map(project => (
+        <ProjectPreview project={project} />
+      ))}
+    </div>
+
+    <!-- Note about adding more projects -->
+    {projects.length === 0 && (
+      <p class="text-center text-gray-600 mt-12">
+        More projects coming soon!
+      </p>
+    )}
+  </main>
+</BaseLayout>

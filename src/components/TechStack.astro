@@ -1,0 +1,91 @@
+---
+const technologies = [
+  { name: "HTML", icon: "/images/tech_icons/html.svg" },
+  { name: "CSS", icon: "/images/tech_icons/css.svg" },
+  { name: "JavaScript", icon: "/images/tech_icons/javascript.svg" },
+  { name: "TypeScript", icon: "/images/tech_icons/typescript.svg" },
+  { name: "PostgreSQL", icon: "/images/tech_icons/postgresql.svg" },
+  { name: "React", icon: "/images/tech_icons/react.svg" },
+  { name: "Next.js", icon: "/images/tech_icons/nextjs.svg" },
+  { name: "Tailwind CSS", icon: "/images/tech_icons/tailwind.svg" },
+  { name: "Elixir", icon: "/images/tech_icons/elixir.svg" },
+  { name: "Phoenix", icon: "/images/tech_icons/phoenix.svg" },
+];
+
+const bgColors = ["bg-blue", "bg-purple", "bg-orange", "bg-pink", "bg-lime"];
+
+// Duplicate array multiple times to ensure seamless looping
+const allTechnologies = [
+  ...technologies,
+  ...technologies,
+  ...technologies,
+  ...technologies
+];
+---
+
+<section class="w-full tech-stack-fade py-4">
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      {allTechnologies.map((tech, index) => (
+        <div class="swiper-slide">
+          <img
+            src={tech.icon}
+            alt={`${tech.name} icon`}
+            width="96"
+            height="96"
+            loading="lazy"
+            class={`
+              w-16 h-16 md:w-24 md:h-24 lg:w-24 lg:h-24
+              ${bgColors[index % bgColors.length]}
+              border-3 border-black rounded-md p-2
+            `}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay } from 'swiper/modules';
+  import 'swiper/css';
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    new Swiper('.mySwiper', {
+      modules: [Autoplay],
+      slidesPerView: 6,
+      spaceBetween: 10,
+      loop: true,
+      speed: 3000,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: false,
+        stopOnLastSlide: false,
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 7,
+        },
+        1024: {
+          slidesPerView: 10,
+        },
+      },
+    });
+  });
+</script>
+
+<style>
+  .swiper {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

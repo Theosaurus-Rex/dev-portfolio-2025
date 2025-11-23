@@ -5,6 +5,7 @@ import PageFooter from '@/components/PageFooter.astro';
 import PostPreview from '@/components/PostPreview.astro';
 import TalkPreview from '@/components/TalkPreview.astro';
 import ProjectPreview from '@/components/ProjectPreview.astro';
+import TechStack from '@/components/TechStack.astro';
 import { getCollection } from 'astro:content';
 
 // Test content collections import
@@ -90,6 +91,12 @@ const projects = await getCollection('projects');
 			{projects.map((project) => (
 				<ProjectPreview project={project} />
 			))}
+		</section>
+
+		<!-- TechStack Carousel -->
+		<section class="mb-12">
+			<h3 class="text-3xl font-bold font-kanit mb-4">Tech Stack Carousel</h3>
+			<TechStack />
 		</section>
 	</div>
 

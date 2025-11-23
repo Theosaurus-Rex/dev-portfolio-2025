@@ -1,5 +1,6 @@
 ---
 import '@/styles/globals.css';
+import MobileMenu from '@/components/MobileMenu.astro';
 
 interface Props {
   title: string;
@@ -24,6 +25,7 @@ const defaultDescription = "Full stack developer and technical consultant based 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="bg-cream min-h-screen">
+    <MobileMenu />
     <slot />
   </body>
 </html>

@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TalkPreview from '@/components/TalkPreview.astro';
+import { getCollection } from 'astro:content';
+
+const talks = (await getCollection('talks')).sort((a, b) => {
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+});
+---
+
+<BaseLayout title="Talks" description="Conference talks and presentations">
+  <main class="flex flex-col bg-cream px-10 xl:px-90">
+    <h1 class="font-climate-crisis text-pink uppercase font-bold text-6xl lg:text-8xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet lg:text-outline-desktop tracking-wider text-center">
+      Talks
+    </h1>
+    <div class="flex flex-col divide-y-4 divide-black gap-4">
+      {talks.map(talk => (
+        <TalkPreview talk={talk} />
+      ))}
+    </div>
+  </main>
+</BaseLayout>

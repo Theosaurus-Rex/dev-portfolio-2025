@@ -1,0 +1,48 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const talks = await getCollection('talks');
+  return talks.map(talk => ({
+    params: { slug: talk.slug },
+    props: { talk },
+  }));
+}) satisfies GetStaticPaths;
+
+const { talk } = Astro.props;
+const { Content } = await talk.render();
+const { title, description, date, videoUrl } = talk.data;
+
+// Format date
+const formattedDate = new Date(date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="flex flex-col items-center bg-cream">
+    <div class="my-12 text-center">
+      <h1 class="text-4xl text-gray-900 font-bold">{title}</h1>
+      <p class="font-bold uppercase italic mt-4 text-xl">
+        {formattedDate}
+      </p>
+    </div>
+
+    <iframe
+      width="540"
+      height="315"
+      src={videoUrl}
+      title={title}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+
+    <article class="prose lg:prose-xl mt-6">
+      <Content />
+    </article>
+  </main>
+</BaseLayout>

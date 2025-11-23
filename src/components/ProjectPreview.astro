@@ -1,5 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import tasklyImage from '@/assets/images/taskly.png';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -7,13 +9,23 @@ interface Props {
 
 const { project } = Astro.props;
 const { name, description, imageSrc, githubUrl, liveUrl } = project.data;
+
+// Map image paths to imported images
+const imageMap: Record<string, any> = {
+  '/images/taskly.png': tasklyImage,
+};
+
+const projectImage = imageMap[imageSrc] || tasklyImage;
 ---
 
 <div class="relative isolate flex flex-col gap-8 lg:flex-row">
   <div class="relative aspect-16/9 sm:aspect-2/1 lg:aspect-square lg:w-64 lg:shrink-0">
-    <img
-      src={imageSrc}
+    <Image
+      src={projectImage}
       alt={name}
+      widths={[256, 384, 512]}
+      formats={['avif', 'webp', 'png']}
+      loading="lazy"
       class="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
     />
     <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>

@@ -2,6 +2,9 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TechStack from '@/components/TechStack.astro';
 import Pill from '@/components/Pill.astro';
+import { Image } from 'astro:assets';
+import heroMobile from '@/assets/images/Header.png';
+import heroDesktop from '@/assets/images/HeaderDesktop.png';
 ---
 
 <BaseLayout title="Home" description="Full stack developer and technical consultant based in Sydney, NSW">
@@ -14,11 +17,11 @@ import Pill from '@/components/Pill.astro';
 
       <!-- Mobile Image -->
       <div class="lg:hidden">
-        <img
-          src="/images/Header.png"
+        <Image
+          src={heroMobile}
           alt="'Sup, I'm Theo, a web developer based out of Sydney, NSW."
-          width="946"
-          height="819"
+          widths={[640, 750, 828, 1080]}
+          formats={['avif', 'webp', 'png']}
           loading="eager"
           class="w-full"
         />
@@ -26,11 +29,11 @@ import Pill from '@/components/Pill.astro';
 
       <!-- Desktop Image -->
       <div class="hidden lg:block">
-        <img
-          src="/images/HeaderDesktop.png"
+        <Image
+          src={heroDesktop}
           alt="'Sup, I'm Theo, and I work as a web developer based in Sydney"
-          width="3500"
-          height="1774"
+          widths={[1200, 1536, 1920, 2560, 3500]}
+          formats={['avif', 'webp', 'png']}
           loading="eager"
           class="w-full"
         />

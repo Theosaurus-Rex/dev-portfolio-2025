@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Pill from '@/components/Pill.astro';
+import PageFooter from '@/components/PageFooter.astro';
 import { getCollection } from 'astro:content';
 
 // Test content collections import
@@ -41,6 +43,18 @@ const projects = await getCollection('projects');
 					<p class="text-sm text-gray-600 mt-4 font-kanit italic">Content collections are configured and ready!</p>
 				</div>
 			</div>
+
+			<div class="mt-12">
+				<h2 class="text-3xl font-bold text-orange mb-4 font-kanit">Pill Component Test</h2>
+				<ul class="flex flex-wrap gap-2 justify-center">
+					<Pill text="TypeScript" />
+					<Pill text="React" />
+					<Pill text="Astro" />
+					<Pill text="Tailwind CSS" />
+					<Pill text="Elixir" />
+				</ul>
+			</div>
 		</div>
 	</div>
+	<PageFooter />
 </BaseLayout>

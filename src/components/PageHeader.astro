@@ -1,0 +1,71 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<header class="bg-blue font-kanit font-bold text-lg uppercase italic tracking-wider border-b-4 border-black p-2">
+  <nav class="flex items-center justify-between" aria-label="Global">
+    <!-- Logo/Name -->
+    <div class="flex lg:flex-1">
+      <a href="/" class="-m-1.5 p-1.5">
+        <span class="px-4 py-2 rounded-md hover:text-blue hover:bg-black transition-colors">
+          Theo Harris
+        </span>
+      </a>
+    </div>
+
+    <!-- Mobile Hamburger Button -->
+    <div class="flex lg:hidden">
+      <button
+        id="menu-toggle"
+        class="p-2 w-10 h-10 flex flex-col justify-center items-center relative z-50"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <div class="w-6 h-0.5 bg-black transition-all duration-300" id="line1"></div>
+        <div class="w-6 h-0.5 bg-black my-1 transition-all duration-300" id="line2"></div>
+        <div class="w-6 h-0.5 bg-black transition-all duration-300" id="line3"></div>
+      </button>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden lg:flex lg:gap-x-12">
+      <a
+        href="/"
+        class:list={[
+          "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",
+          { "text-blue bg-black": currentPath === "/" }
+        ]}
+      >
+        Home
+      </a>
+      <a
+        href="/blog"
+        class:list={[
+          "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",
+          { "text-blue bg-black": currentPath.startsWith("/blog") }
+        ]}
+      >
+        Blog
+      </a>
+      <a
+        href="/talks"
+        class:list={[
+          "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",
+          { "text-blue bg-black": currentPath.startsWith("/talks") }
+        ]}
+      >
+        Talks
+      </a>
+      <a
+        href="/projects"
+        class:list={[
+          "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",
+          { "text-blue bg-black": currentPath.startsWith("/projects") }
+        ]}
+      >
+        Projects
+      </a>
+    </div>
+  </nav>
+</header>

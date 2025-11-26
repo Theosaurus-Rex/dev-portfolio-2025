@@ -14,6 +14,11 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
   },
+  vite: {
+    build: {
+      assetsInlineLimit: 0,
+    },
+  },
   prefetch: {
     defaultStrategy: 'hover',
     prefetchAll: true,

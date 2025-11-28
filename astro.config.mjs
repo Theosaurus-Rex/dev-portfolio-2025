@@ -9,6 +9,11 @@ export default defineConfig({
   image: {
     domains: ['images.unsplash.com'], // Allow external blog post images
   },
+  markdown: {
+    shikiConfig: {
+      theme: 'dracula',
+    },
+  },
   integrations: [sitemap()],
   compressHTML: true,
   build: {

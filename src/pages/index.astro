@@ -1,144 +1,172 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import TechStack from '@/components/TechStack.astro';
-import Pill from '@/components/Pill.astro';
-import { Image } from 'astro:assets';
-import heroMobile from '@/assets/images/Header.png';
-import heroDesktop from '@/assets/images/HeaderDesktop.png';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import TechStack from "@/components/TechStack.astro";
+import Pill from "@/components/Pill.astro";
+import { Image } from "astro:assets";
+import heroMobile from "@/assets/images/Header.png";
+import heroDesktop from "@/assets/images/HeaderDesktop.png";
 ---
 
-<BaseLayout title="Home" description="Full stack developer and technical consultant based in Sydney, NSW">
-  <main class="flex flex-col pt-4 bg-cream min-h-screen lg:px-24">
-    <!-- Hero Section -->
-    <section>
-      <h1 class="sr-only">
-        'Sup, I'm Theo, a web developer based out of Sydney, NSW.
-      </h1>
+<BaseLayout
+    title="Home"
+    description="Full stack developer and technical consultant based in Sydney, NSW"
+>
+    <main class="flex flex-col pt-4 bg-cream min-h-screen lg:px-24">
+        <!-- Hero Section -->
+        <section>
+            <h1 class="sr-only">
+                'Sup, I'm Theo, a web developer based out of Sydney, NSW.
+            </h1>
 
-      <!-- Mobile Image -->
-      <div class="lg:hidden">
-        <Image
-          src={heroMobile}
-          alt="'Sup, I'm Theo, a web developer based out of Sydney, NSW."
-          widths={[640, 750, 828, 1080]}
-          formats={['avif', 'webp', 'png']}
-          loading="eager"
-          class="w-full"
-        />
-      </div>
+            <!-- Mobile Image -->
+            <div class="lg:hidden">
+                <Image
+                    src={heroMobile}
+                    alt="'Sup, I'm Theo, a web developer based out of Sydney, NSW."
+                    widths={[640, 750, 828, 1080]}
+                    formats={["avif", "webp", "png"]}
+                    loading="eager"
+                    class="w-full"
+                />
+            </div>
 
-      <!-- Desktop Image -->
-      <div class="hidden lg:block">
-        <Image
-          src={heroDesktop}
-          alt="'Sup, I'm Theo, and I work as a web developer based in Sydney"
-          widths={[1200, 1536, 1920, 2560, 3500]}
-          formats={['avif', 'webp', 'png']}
-          loading="eager"
-          class="w-full"
-        />
-      </div>
-    </section>
+            <!-- Desktop Image -->
+            <div class="hidden lg:block">
+                <Image
+                    src={heroDesktop}
+                    alt="'Sup, I'm Theo, and I work as a web developer based in Sydney"
+                    widths={[1200, 1536, 1920, 2560, 3500]}
+                    formats={["avif", "webp", "png"]}
+                    loading="eager"
+                    class="w-full"
+                />
+            </div>
+        </section>
 
-    <!-- Bio Sections -->
-    <section class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-x-4 lg:space-y-0 p-4 lg:items-stretch">
-      <div class="bg-blue p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
-        <p class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-4xl">
-          I've been a full stack developer and technical consultant for 3+
-          years, and I have a passion for the web as a storytelling medium.
-        </p>
-      </div>
-      <div class="bg-pink p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
-        <p class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-4xl">
-          I care deeply about equal access to the web for everyone, and work
-          hard to create digital experiences that are both accessible and
-          enjoyable.
-        </p>
-      </div>
-    </section>
+        <!-- Bio Sections -->
+        <section
+            class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-x-4 lg:space-y-0 p-4 lg:items-stretch"
+        >
+            <div
+                class="bg-blue p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4"
+            >
+                <p
+                    class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-4xl"
+                >
+                    I've been a full stack developer and technical consultant
+                    for 4+ years, and I have a passion for the web as a
+                    storytelling medium.
+                </p>
+            </div>
+            <div
+                class="bg-pink p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4"
+            >
+                <p
+                    class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-4xl"
+                >
+                    I care deeply about equal access to the web for everyone,
+                    and work hard to create digital experiences that are both
+                    accessible and enjoyable.
+                </p>
+            </div>
+        </section>
 
-    <!-- Tech Stack Section -->
-    <section class="overflow-hidden">
-      <div class="flex items-center w-full">
-        <h2 class="font-climate-crisis text-orange uppercase font-bold text-4xl md:text-6xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet tracking-wider">
-          Stack
-        </h2>
-        <hr class="border md:border-2 border-black w-full" />
-      </div>
-      <TechStack />
-    </section>
+        <!-- Tech Stack Section -->
+        <section class="overflow-hidden">
+            <div class="flex items-center w-full">
+                <h2
+                    class="font-climate-crisis text-orange uppercase font-bold text-4xl md:text-6xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet tracking-wider"
+                >
+                    Stack
+                </h2>
+                <hr class="border md:border-2 border-black w-full" />
+            </div>
+            <TechStack />
+        </section>
 
-    <!-- Work Experience Section -->
-    <section>
-      <div class="flex items-center w-full">
-        <h2 class="font-climate-crisis text-blue uppercase font-bold text-4xl md:text-6xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet tracking-wider">
-          Work
-        </h2>
-        <hr class="border md:border-2 border-black w-full" />
-      </div>
-      <div class="m-4 mt-0 flex flex-col xl:flex-row gap-4">
-        <!-- Job 1: Alembic -->
-        <div class="bg-purple p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
-          <h3 class="text-2xl font-bold uppercase italic">
-            Full Stack Developer
-          </h3>
-          <p class="font-bold italic">@ Alembic, 2022 - Present</p>
-          <p class="font-medium">
-            Developed several rapid prototypes in small, agile teams for
-            greenfield projects across several different business domains,
-            including education, natural resources, and automotive services.
-          </p>
-          <ul class="flex flex-wrap gap-1.5 mt-2">
-            <Pill text="JavaScript" />
-            <Pill text="React" />
-            <Pill text="Elixir" />
-            <Pill text="Phoenix" />
-            <Pill text="LiveView" />
-            <Pill text="Tailwind" />
-            <Pill text="Ash" />
-          </ul>
-        </div>
+        <!-- Work Experience Section -->
+        <section>
+            <div class="flex items-center w-full">
+                <h2
+                    class="font-climate-crisis text-blue uppercase font-bold text-4xl md:text-6xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet tracking-wider"
+                >
+                    Work
+                </h2>
+                <hr class="border md:border-2 border-black w-full" />
+            </div>
+            <div class="m-4 mt-0 flex flex-col xl:flex-row gap-4">
+                <!-- Job 1: Alembic -->
+                <div
+                    class="bg-purple p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4"
+                >
+                    <h3 class="text-2xl font-bold uppercase italic">
+                        Full Stack Developer
+                    </h3>
+                    <p class="font-bold italic">@ Alembic, 2022 - Present</p>
+                    <p class="font-medium">
+                        Developed several rapid prototypes in small, agile teams
+                        for greenfield projects across several different
+                        business domains, including education, natural
+                        resources, and automotive services.
+                    </p>
+                    <ul class="flex flex-wrap gap-1.5 mt-2">
+                        <Pill text="JavaScript" />
+                        <Pill text="React" />
+                        <Pill text="Elixir" />
+                        <Pill text="Phoenix" />
+                        <Pill text="LiveView" />
+                        <Pill text="Tailwind" />
+                        <Pill text="Ash" />
+                    </ul>
+                </div>
 
-        <!-- Job 2: Engage Squared -->
-        <div class="bg-pink p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
-          <h3 class="text-2xl font-bold uppercase italic">
-            M365 Developer
-          </h3>
-          <p class="font-bold italic">@ Engage Squared, 2021 - 2022</p>
-          <p class="font-medium">
-            Worked in project teams alongside consultants to deliver solutions
-            across various Microsoft ecosystem platforms, including
-            SharePoint, MS Teams and Power Automate Flow.
-          </p>
-          <ul class="flex flex-wrap gap-1.5 mt-2">
-            <Pill text="JavaScript" />
-            <Pill text="React" />
-            <Pill text="SPFx" />
-            <Pill text="Power Automate" />
-          </ul>
-        </div>
+                <!-- Job 2: Engage Squared -->
+                <div
+                    class="bg-pink p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4"
+                >
+                    <h3 class="text-2xl font-bold uppercase italic">
+                        M365 Developer
+                    </h3>
+                    <p class="font-bold italic">
+                        @ Engage Squared, 2021 - 2022
+                    </p>
+                    <p class="font-medium">
+                        Worked in project teams alongside consultants to deliver
+                        solutions across various Microsoft ecosystem platforms,
+                        including SharePoint, MS Teams and Power Automate Flow.
+                    </p>
+                    <ul class="flex flex-wrap gap-1.5 mt-2">
+                        <Pill text="JavaScript" />
+                        <Pill text="React" />
+                        <Pill text="SPFx" />
+                        <Pill text="Power Automate" />
+                    </ul>
+                </div>
 
-        <!-- Job 3: RedHill Education -->
-        <div class="bg-orange p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4">
-          <h3 class="text-2xl font-bold uppercase italic">
-            Web Developer
-          </h3>
-          <p class="font-bold italic">
-            @ RedHill Education, JUL - AUG 2021
-          </p>
-          <p class="font-medium">
-            Over the course of 3 weeks, rebuilt the existing staff intranet
-            using Google Pages. Delivered technical documentation to ensure
-            smooth handover of the implemented solution to the internal staff
-            at RedHill after my contract was completed.
-          </p>
-          <ul class="flex flex-wrap gap-1.5 mt-2">
-            <Pill text="HTML" />
-            <Pill text="CSS" />
-            <Pill text="Google Pages" />
-          </ul>
-        </div>
-      </div>
-    </section>
-  </main>
+                <!-- Job 3: RedHill Education -->
+                <div
+                    class="bg-orange p-4 border-4 border-black rounded-md lg:flex-1 lg:p-4"
+                >
+                    <h3 class="text-2xl font-bold uppercase italic">
+                        Web Developer
+                    </h3>
+                    <p class="font-bold italic">
+                        @ RedHill Education, JUL - AUG 2021
+                    </p>
+                    <p class="font-medium">
+                        Over the course of 3 weeks, rebuilt the existing staff
+                        intranet using Google Pages. Delivered technical
+                        documentation to ensure smooth handover of the
+                        implemented solution to the internal staff at RedHill
+                        after my contract was completed.
+                    </p>
+                    <ul class="flex flex-wrap gap-1.5 mt-2">
+                        <Pill text="HTML" />
+                        <Pill text="CSS" />
+                        <Pill text="Google Pages" />
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
 </BaseLayout>

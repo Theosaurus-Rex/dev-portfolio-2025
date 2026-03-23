@@ -12,7 +12,7 @@
     "@astrojs/sitemap": "^3.7.1",
     "@fontsource/climate-crisis": "^5.2.11",
     "@fontsource/kanit": "^5.2.8",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/typography": "^0.5.19",
     "astro": "^6.0.5",
     "swiper": "^12.1.2"

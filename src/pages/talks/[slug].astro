@@ -1,18 +1,18 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
   const talks = await getCollection('talks');
   return talks.map(talk => ({
-    params: { slug: talk.slug },
+    params: { slug: talk.id },
     props: { talk },
   }));
 }) satisfies GetStaticPaths;
 
 const { talk } = Astro.props;
-const { Content } = await talk.render();
+const { Content } = await render(talk);
 const { title, description, date, videoUrl } = talk.data;
 
 // Format date

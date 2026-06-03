@@ -9,7 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource/climate-crisis": "^5.2.12",
     "@fontsource/kanit": "^5.2.8",
     "@tailwindcss/postcss": "^4.3.0",

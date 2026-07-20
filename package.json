@@ -11,7 +11,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource/climate-crisis": "^5.2.12",
-    "@fontsource/kanit": "^5.2.8",
+    "@fontsource/kanit": "^5.3.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.0.9",

@@ -4,6 +4,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
+import mdx from '@astrojs/mdx';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://theo-harris-dev.com',
@@ -15,7 +17,7 @@ export default defineConfig({
       theme: 'dracula',
     },
   },
-  integrations: [sitemap()],
+  integrations: [sitemap(), mdx()],
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',

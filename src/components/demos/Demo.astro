@@ -1,73 +1,75 @@
 ---
 /**
- * A frame for a live example in a blog post: the real thing, rendered, rather
- * than a screenshot of it.
- *
- * Takes any markup in its default slot, plus two optional slots — `code` for
- * the source that produced it, and `caption` for a note underneath.
- *
- * ```mdx
- * <Demo label="Low contrast text">
- *   <p style="color:#8a8a8a">Sign up for our newsletter</p>
- *
- *   <Fragment slot="code">
- *     ```html
- *     <p style="color:#8a8a8a">Sign up for our newsletter</p>
- *     ```
- *   </Fragment>
- *
- *   <p slot="caption">Grey on white, well under the 4.5:1 minimum.</p>
- * </Demo>
- * ```
- *
- * `not-prose` matters here: posts render inside a `.prose` wrapper in
- * src/pages/blog/[slug].astro, and the typography plugin would otherwise
- * restyle the very markup a demo is trying to show off. Shiki brings its own
- * styles for the `code` slot, so it is unaffected.
- *
- * A demo of something broken is a picture of a problem, not content. Mark the
- * broken part `aria-hidden="true"` and put the actual information in the
- * caption, so the post does not serve the trap it is describing.
- */
+A container for a live, rendered example within a web page, used for examples to go alongside blog post content.
+
+Takes any markup in the default slot. Provides an optional code slot, for rendering the example's source code, and an optional caption slot for providing additional notes and context.
+
+ ```mdx
+ <Demo label="Low contrast text">
+   <p style="color:#8a8a8a">Sign up for our newsletter</p>
+
+   <Fragment slot="code">
+     ```html
+     <p style="color:#8a8a8a">Sign up for our newsletter</p>
+     ```
+   </Fragment>
+
+   <p slot="caption">Grey on white, well under the 4.5:1 minimum.</p>
+ </Demo>
+ ```
+
+ `not-prose` counters the `.prose` wrapper used in
+ src/pages/blog/[slug].astro, as the typography plugin would otherwise
+ restyle the markup a demo is trying to show off. Shiki brings its own
+ styles for the `code` slot, so it is unaffected.
+
+ A demo of something broken is a picture of a problem, not content. Mark the
+ broken part `aria-hidden="true"` and put the actual information in the
+ caption, so the post does not end up with legitimately inaccessible content.
+**/
+
 interface Props {
-  /** Short label for the strip along the top. */
-  label?: string;
+    /** Short label for the strip along the top. */
+    label?: string;
 }
 
-const { label = 'Live example' } = Astro.props;
+const { label = "Live example" } = Astro.props;
 
-// Optional slots are rendered up front rather than tested with
-// Astro.slots.has(): that reports true for a slot a parent merely forwards,
-// even when nothing was passed, which leaves empty wrappers in the markup.
-const code = Astro.slots.has('code') ? await Astro.slots.render('code') : '';
-const caption = Astro.slots.has('caption') ? await Astro.slots.render('caption') : '';
+const code = Astro.slots.has("code") ? await Astro.slots.render("code") : "";
+const caption = Astro.slots.has("caption")
+    ? await Astro.slots.render("caption")
+    : "";
 
 const hasCode = code.trim().length > 0;
 const hasCaption = caption.trim().length > 0;
 ---
 
-<figure class="not-prose my-8 overflow-hidden rounded-lg border-2 border-black bg-white font-kanit">
-  <p class="bg-black px-4 py-2 text-xs font-bold tracking-widest text-white uppercase">
-    {label}
-  </p>
+<figure
+    class="not-prose my-8 overflow-hidden rounded-lg border-2 border-black bg-white font-kanit"
+>
+    <p
+        class="bg-black px-4 py-2 text-xs font-bold tracking-widest text-white uppercase"
+    >
+        {label}
+    </p>
 
-  <div class="p-4 md:p-6">
-    <slot />
-  </div>
+    <div class="p-4 md:p-6">
+        <slot />
+    </div>
 
-  {
-    hasCode && (
-      <div class="overflow-x-auto border-t-2 border-black p-4 text-sm md:p-6">
-        <Fragment set:html={code} />
-      </div>
-    )
-  }
+    {
+        hasCode && (
+            <div class="overflow-x-auto border-t-2 border-black p-4 text-sm md:p-6">
+                <Fragment set:html={code} />
+            </div>
+        )
+    }
 
-  {
-    hasCaption && (
-      <figcaption class="border-t-2 border-black px-4 py-3 text-sm leading-relaxed">
-        <Fragment set:html={caption} />
-      </figcaption>
-    )
-  }
+    {
+        hasCaption && (
+            <figcaption class="border-t-2 border-black px-4 py-3 text-sm leading-relaxed">
+                <Fragment set:html={caption} />
+            </figcaption>
+        )
+    }
 </figure>

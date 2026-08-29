@@ -1,0 +1,88 @@
+---
+title: Common Accessibility Traps and How To Fix Them
+description: A look at how a handful of anti-patterns cause the bulk of accessibility issues across the entire web.
+date: "2026/08/22"
+imageUrl: "https://images.unsplash.com/photo-1765445665844-5d317051b664?q=80&w=2869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+---
+
+import Demo from '@/components/demos/Demo.astro';
+import { contrast, isLargeText } from '@/lib/contrast';
+
+export const sameColourRows = [
+  { size: 16, weight: 400 },
+  { size: 18, weight: 700 },
+  { size: 20, weight: 400 },
+  { size: 20, weight: 700 },
+  { size: 24, weight: 400 },
+];
+
+At work last week, one of our developers who is newer to the industry approached me to ask if I had written any documentation on common accessibility issues we come across in our projects at work, and guidance on how to identify and resolve them. Much to my chagrin, this is something that I'd have loved to have spent the time to do, but no work time has ever been allocated to proactively implementing accessibility; we, both as a company and a broader industry, unfortunately tend to be reactive, rather than proactive, when it comes to keeping our digital work accessible. I've been meaning to do more writing on this in my own time, but life gets in the way, ADHD tears my focus away and onto starting the next shiny thing, and this blog doesn't get updated in two years (whoops). 
+
+I decided a good place to start here is by codifying the advice I gave that developer, so that it may help others - that advice is that roughly [96% of all accessibility issues fall under one of six categories](https://webaim.org/projects/million/). Yeah, for real. The good news is that the majority of these things are easy to fix for most developers without requiring niche specialist knowledge, and once you begin to see and address these issues, you are more educated, and armed to be more proactive, with every future project you develop. 
+
+My goal for this post is to help get you acquainted with all six of these common issue categories, give you some examples of how they show up in the real world, and equip you with further tools and resources to help you find and resolve them in your day-to-day work (or at least flag their visibility - I'm no stranger to the red tape of beauracracy either.)
+
+## 1. Low contrast text
+
+This is probably the issue I have come across the most frequently in both my day-to-day engineering work and my general use of the web. While I do need glasses (due to astigmatism and choosing a career where I stare at screens for over 40 hours a week), I've had my colour vision tested and it's perfect, so I know that if something is an issue for me, it's most certainly an issue for folks with any kind of vision impairment.
+
+### What are contrast thresholds?
+
+The nice thing about this class of accessibility issue is that we have definitive formulas for determining whether something has enough contast to be comfortably legible on a web page. WCAG 2, the current standard for web accessibility, compares colours using something called a Contrast Ratio, which essentially aims to measure the perceived difference in "luminance", or in simpler terms, brightness, between two colours. This difference is expressed as a ratio, which can range from 1:1 on the low end (e.g. black text on a black background), and 21:1 on the highest end (e.g black text on a white background). 
+
+Basically, the higher the ratio, the more likely it is that the text is legible to the majority of sighted web users. I will caveat this with one piece of advice, which is that pure black text on pure white background (or vice versa in dark mode, for example), almost never looks better than using a slightly lighter black on a slightly off-white. Additionally, text with maximum contrast can make things slightly harder to read for folks with astigmatism, as it exacerbates the amount of "feathering" we see on the text. Just some food for thought.
+
+### Minimum Contrast
+The [minimum contrast requirements](https://www.w3.org/TR/WCAG21/#contrast-minimum), i.e. the ones you are legally obligated to meet if you want your website to meet ADA guidelines, state that text (and images of text, which I'll address in another section further down), should have a contrast ratio of *at least* 4.5:1. The exception is anything considered "large text", which requires a contrast ratio of at least 3:1. 
+
+Let's start with a basic example. Monochromatic brutalism is very in vogue now, especially for fashion ecommerce, where I have spent a significant amount of time working. Think hard lines, sharp edges, and tiny, tiny fonts scaled down in service of making images of products and models the focal point. Colour is pretty much nonexistent in the storefronts I've worked on, so all text sits somewhere between pure black and pure white; that is to say, most content on the website will be some shade of gray. When designers are given such a limited palette to work with in order to communicate information heirarchy, in order to get enough variety they frequently lean towards incorporating lighter, inaccessible shades of gray.
+
+<Demo label="Avoid this">
+  <p style="color:#8a8a8a" aria-hidden="true">Sign up for our newsletter</p>
+
+  <p slot="caption"><code>#8a8a8a</code> on white measures {contrast('#8a8a8a', '#ffffff').label}, which is below the 4.5:1 AA minimum for normal text.</p>
+</Demo>
+
+While this might be readable if you have pretty decent vision, it's not an accessible combination. Let's try nudging the gray's brightness down:
+
+<Demo label="Do this instead">
+  <p style="color:#595959">Sign up for our newsletter</p>
+
+  <p slot="caption">Same font, same size, same layout. <code>#595959</code> measures {contrast('#595959', '#ffffff').label}, clearing AA and AAA both.</p>
+</Demo>
+
+By bumping the brightness down, we can still keep a distinct shade of gray that differs from any bold, pure black headline text around it, and visually denotes this as a sub-heading in the page's information heirarchy. 
+
+### Font Size and Weight
+
+I noted earlier that the required threshold is different for anything considered "large" text. According to the WCAG guidelines, this refers to any text content that is at least 18pt in size, or 14pt if the text is bolded. In cases like this, we only need to have a contrast ratio of 3:1 to pass the minimum contrast requirements, with the reasoning being that larger or heavier text is more legible at a lower luminance in comparison to its background.
+
+Below, we have several examples all using the same gray, with a contrast ratio of 3.45:1. Watch what happens to the same size of text at two different weights:
+
+<Demo label="One colour across various font sizes and weights">
+  <div class="space-y-4">
+    {sameColourRows.map(({ size, weight }) => {
+      const large = isLargeText(size, weight);
+      const { label, threshold, passesAA } = contrast('#8a8a8a', '#ffffff', large);
+      return (
+        <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-gray-200 pb-3 last:border-b-0">
+          <p aria-hidden="true" style={`color:#8a8a8a;font-size:${size}px;font-weight:${weight}`}>
+            Sign up for our newsletter
+          </p>
+          <p class="text-sm">
+            <strong>{size}px / {weight}</strong> - This is {large ? 'large' : 'normal'} text, so
+            the bar is {threshold}:1. {label} {passesAA ? 'passes' : 'fails'}.
+          </p>
+        </div>
+      );
+    })}
+  </div>
+
+  <div slot="caption">
+    The interesting thing here is the two rows that are both 20px font size (which is a 15pt font size given the assumed 96dpi in the WCAG spec, therefore not "large" text). Their only difference is the weight, but bolding it is what tips over the criteria from 4.5:1 to 3:1 and turns the failure into a pass. Regular weight text has to make it all the way to 24px (18pt) to get the same affordance.
+  </div>
+</Demo>
+
+This is useful to know, because in practice, it means that the same colour can pass for a page header but fail on body copy. It also means bumping a bold subheading from 20px down to 18px, or dropping a weight from 700 to 600, can fail text that passed yesterday while the colour in your design tokens never changed. 
+
+It's worth noting that [APCA](https://git.apcacontrast.com/), which is the candidate model for WCAG 3, folds size and weight into the score itself. For anything you are being audited against today, though, the two thresholds above are the rule.

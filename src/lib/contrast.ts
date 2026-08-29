@@ -54,6 +54,20 @@ export function relativeLuminance(hex: string): number {
 }
 
 /**
+ * Whether WCAG counts text at this size and weight as "large", which is held to
+ * a lower contrast bar (3:1 rather than 4.5:1 for AA).
+ *
+ * WCAG defines large as 18pt, or 14pt bold. At the 96dpi the spec assumes, that
+ * is 24px and 18.66px respectively — a cliff edge, so 18px bold is *not* large
+ * and needs the full 4.5:1 despite looking heavier than text that does qualify.
+ *
+ * Reference: https://www.w3.org/TR/WCAG21/#dfn-large-scale
+ */
+export function isLargeText(fontSizePx: number, fontWeight = 400): boolean {
+  return fontWeight >= 700 ? fontSizePx >= 18.66 : fontSizePx >= 24;
+}
+
+/**
  * Contrast between two hex colours, plus whether it clears the WCAG minimums.
  *
  * `large` marks text that is at least 18.66px bold or 24px regular, which WCAG

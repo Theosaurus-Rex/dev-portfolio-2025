@@ -57,7 +57,7 @@ Having said that, it can be useful to describe the _type_ of image that is being
 
 If you’ve read this far, you might be under the impression that alt text needs to be dry and objective, however, this is not always the case. The same image may be described differently depending on the surrounding page context. Take the following image, for example:
 
-![An oil painting of King Henry VIII.](https://www.rmg.co.uk/sites/default/files/styles/large_no_alt/public/2022-10/Henry%20VIII%2C%201491-1547%20by%20Hans%20Holbein%2C%20BHC2763.jpg?itok=9iFIFNQi)
+![An oil painting of King Henry VIII.](https://www.rmg.co.uk/sites/default/files/styles/large/public/2022-10/Henry%20VIII%2C%201491-1547%20by%20Hans%20Holbein%2C%20BHC2763.jpg.webp?itok=onGTNLCA)
 
 _Image Credit: [Royal Museums Greenwich](https://www.rmg.co.uk/stories/topics/royal-portraits-royal-museums-greenwichs-collection)_
 

@@ -39,6 +39,16 @@
   --color-purple: oklch(67.64% 0.1779 284.23);
   --color-cream: oklch(94.25% 0.0165 79.35);
 
+  /*
+    Accessible tier of the palette, for coloured text on the cream body
+    background. Same hues as above, darkened to ~54% lightness so they
+    clear WCAG AA (4.5:1) against cream. The bright tokens above stay for
+    fills and outlined display headings.
+  */
+  --color-pink-dark: oklch(54% 0.22 351.99);
+  --color-purple-dark: oklch(54% 0.178 284.23);
+  --color-orange-dark: oklch(54% 0.162 42.22);
+
   --font-climate-crisis: "Climate Crisis", sans-serif;
   --font-kanit: "Kanit", sans-serif;
 }

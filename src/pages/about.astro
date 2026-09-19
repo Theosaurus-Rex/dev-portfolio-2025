@@ -1,0 +1,326 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContentCard from "@/components/ContentCard.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import Pill from "@/components/Pill.astro";
+
+const practices = [
+    {
+        title: "Design Systems",
+        colour: "blue" as const,
+        body: "I led the design system for a nurse-led healthcare platform's mobile app, defining reusable components that were picked up across its treatments and consent-form epics. On a US disability respite platform I set the design system up from scratch. I've also run component-system, enforced-usage and white-labelling spikes for a client expanding into new health verticals.",
+    },
+    {
+        title: "Accessible By Default",
+        colour: "pink" as const,
+        body: "I'd rather settle contrast, focus behaviour and semantics at the design-system stage, where they're cheap, than at the remediation stage, where they aren't. And I test with VoiceOver, because automated tooling catches only a fraction of what real assistive technology use reveals.",
+    },
+    {
+        title: "End-to-End Ownership",
+        colour: "purple" as const,
+        body: "I scope, ticket, design, build, document and manually QA entire features solo. Recent epics have shipped with fewer than three bugs found across internal QA and production combined, and I've hit delivery estimates within two days across three consecutive epics.",
+    },
+];
+
+const work = [
+    {
+        title: "Health-tech platform",
+        sector: "Nurse-led medispas · 2025–2026",
+        colour: "orange" as const,
+        intro: "A platform connecting registered nurses with remote physicians for treatment sign-off.",
+        points: [
+            "Led design and delivery of the design system for the platform's mobile app, defining components later adopted across its Mobile Treatments and Mobile Consent Forms epics",
+            "Owned the core treatments architecture end-to-end, from React and GraphQL prototyping through to production delivery on Phoenix and LiveView",
+            "Ran component-system and white-labelling spikes as the client expanded beyond aesthetic treatments into psychological health and physiotherapy",
+        ],
+        tech: ["React", "GraphQL", "Elixir", "Phoenix", "LiveView", "Tailwind"],
+    },
+    {
+        title: "Disability respite platform",
+        sector: "California, US · 2026",
+        colour: "blue" as const,
+        intro: "A service matching support workers with clients, from families of children with disabilities through to veterans.",
+        points: [
+            "Designed and built the UI for pre-billing verification and multi-authorization rollover flows, working from ambiguous requirements through to shipped interfaces",
+            "Built a form builder feature and championed accessible branding options as part of the platform's design system",
+            "Set the project's design system up from scratch and introduced a PR template to raise team-wide review quality",
+        ],
+        tech: ["Design Systems", "Accessibility", "Figma"],
+    },
+    {
+        title: "Fast-fashion retail group",
+        sector: "Multiple online apparel brands · 2024–2025",
+        colour: "pink" as const,
+        intro: "E-commerce storefronts for a group of apparel brands.",
+        points: [
+            "Led an ADA compliance audit and accessibility remediation program across the group's sites, plus hands-on accessibility training for the content team",
+            "Redesigned the product page details accordion and landing pages for accessibility and conversion, measurably improving landing page conversion rates",
+            "Integrated Klaviyo subscriptions and refactored the legacy frontend, cutting code surface area by more than 30% without losing functionality",
+        ],
+        tech: ["JavaScript", "Accessibility", "Klaviyo"],
+    },
+    {
+        title: "Automotive retail technology platform",
+        sector: "2024–2026",
+        colour: "purple" as const,
+        intro: "The platform major car brands use for tailored in-person and video ownership appointments, valet and repair services.",
+        points: [
+            "Solely delivered the front-end workflows for a 12-week rebuild; 80% of surveyed users preferred the redesigned workflows to the prior system",
+            "Delivered a branded dealership-onboarding experience and appointment workflow for a luxury automotive client, and led a manage-UI architecture rework",
+            "Used Cursor and Claude for frontend R&D, speeding up prototyping and day-to-day delivery",
+        ],
+        tech: ["Elixir", "Phoenix", "LiveView", "Ash", "Tailwind"],
+    },
+];
+
+const accessibility = [
+    "Led an ADA compliance audit and accessibility remediation program across a retail group's e-commerce sites",
+    "Ran hands-on accessibility training for a client's content team over several weeks",
+    "Championed accessible branding options within a client's design system, so the decisions landed before they became remediation",
+    "Redesigned a product page details accordion for accessibility and conversion together, rather than trading one off against the other",
+];
+
+const speaking = [
+    { text: "Speaker, ElixirConf 2022", detail: "Wordle, Elixir flavour" },
+    { text: "Guest, Elixir Wizards podcast", detail: "September 2022" },
+    { text: "Guest, Exercism's Functional February", detail: "February 2024" },
+    {
+        text: "Sydney Elixir meetup talks",
+        detail: "Testing LiveViews, learning Gleam in a week",
+    },
+];
+---
+
+<BaseLayout
+    title="About"
+    description="Design engineer in Sydney, NSW. Design systems, accessibility, and products built end-to-end."
+>
+    <main class="flex flex-col bg-cream min-h-screen lg:px-24">
+        <!-- Lead -->
+        <section aria-labelledby="about-heading">
+            <h1
+                id="about-heading"
+                class="font-climate-crisis text-orange uppercase font-bold text-6xl lg:text-8xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet lg:text-outline-desktop tracking-wider text-center"
+            >
+                About
+            </h1>
+
+            <div class="m-4 lg:mx-0">
+                <ContentCard colour="lime">
+                    <p
+                        class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-3xl"
+                    >
+                        Design engineer in Sydney. I trained in visual arts
+                        before moving into software, and I've spent five years
+                        building products end-to-end — from UX flows and
+                        interface design through to production React, TypeScript
+                        and Elixir.
+                    </p>
+                </ContentCard>
+            </div>
+        </section>
+
+        <!-- Background -->
+        <section aria-labelledby="background-heading">
+            <SectionHeading id="background-heading" colour="blue">
+                Art School, Then Software
+            </SectionHeading>
+
+            <div
+                class="m-4 mt-0 lg:mx-0 flex flex-col lg:flex-row gap-4 lg:items-stretch"
+            >
+                <ContentCard colour="white" class="lg:flex-1">
+                    <p class="font-kanit font-medium md:text-lg">
+                        I came to software from visual arts, and it shaped what
+                        I notice. Type that sits wrong, a focus state that goes
+                        missing, an error message that tells you something
+                        failed but not what to do about it — those things bother
+                        me. Fixing them is most of what separates software that
+                        works from software people actually like using.
+                    </p>
+                </ContentCard>
+
+                <ContentCard colour="white" class="lg:flex-1">
+                    <p class="font-kanit font-medium md:text-lg">
+                        Five years in, I still work across both sides. I've been
+                        a technical consulting engineer at Alembic since January
+                        2022, embedded in teams of two to four across
+                        healthcare, e-commerce and automotive. The job is
+                        usually to take a loosely-scoped idea and hand back a
+                        shipped feature — so I scope it, write the tickets,
+                        design the UI, build it, document it and QA it.
+                    </p>
+                </ContentCard>
+            </div>
+        </section>
+
+        <!-- What I do -->
+        <section aria-labelledby="practice-heading">
+            <SectionHeading id="practice-heading" colour="pink">
+                What I Do
+            </SectionHeading>
+
+            <div
+                class="m-4 mt-0 lg:mx-0 flex flex-col xl:flex-row gap-4 xl:items-stretch"
+            >
+                {
+                    practices.map((practice) => (
+                        <ContentCard colour={practice.colour} class="xl:flex-1">
+                            <h3 class="font-kanit text-2xl font-bold uppercase italic">
+                                {practice.title}
+                            </h3>
+                            <p class="font-kanit font-medium mt-2">
+                                {practice.body}
+                            </p>
+                        </ContentCard>
+                    ))
+                }
+            </div>
+        </section>
+
+        <!-- Selected work -->
+        <section aria-labelledby="work-heading">
+            <SectionHeading id="work-heading" colour="purple">
+                Selected Work
+            </SectionHeading>
+
+            <p class="font-kanit font-medium md:text-lg mx-4 lg:mx-0 mb-4">
+                Client work is under NDA, so these are described by sector
+                rather than by name.
+            </p>
+
+            <div
+                class="m-4 mt-0 lg:mx-0 grid grid-cols-1 xl:grid-cols-2 gap-4 items-stretch"
+            >
+                {
+                    work.map((project) => (
+                        <ContentCard
+                            colour={project.colour}
+                            class="flex flex-col"
+                        >
+                            <h3 class="font-kanit text-2xl font-bold uppercase italic">
+                                {project.title}
+                            </h3>
+                            <p class="font-kanit font-bold italic">
+                                {project.sector}
+                            </p>
+                            <p class="font-kanit font-medium mt-2">
+                                {project.intro}
+                            </p>
+                            <ul class="font-kanit font-medium mt-2 list-disc list-outside pl-5 space-y-1.5">
+                                {project.points.map((point) => (
+                                    <li>{point}</li>
+                                ))}
+                            </ul>
+                            <ul class="flex flex-wrap gap-1.5 mt-4 pt-2">
+                                {project.tech.map((item) => (
+                                    <Pill text={item} />
+                                ))}
+                            </ul>
+                        </ContentCard>
+                    ))
+                }
+            </div>
+        </section>
+
+        <!-- Accessibility -->
+        <section aria-labelledby="a11y-heading">
+            <SectionHeading id="a11y-heading" colour="orange">
+                Accessibility
+            </SectionHeading>
+
+            <div class="m-4 mt-0 lg:mx-0">
+                <ContentCard colour="white">
+                    <p class="font-kanit font-medium md:text-lg">
+                        Accessibility is the part of the craft I've gone deepest
+                        on. It's the difference between a product that's
+                        available to everyone and one that quietly isn't.
+                    </p>
+                    <ul
+                        class="font-kanit font-medium md:text-lg mt-4 list-disc list-outside pl-5 space-y-2"
+                    >
+                        {accessibility.map((item) => <li>{item}</li>)}
+                        <li>
+                            Wrote <a
+                                href="/blog/writing-better-alt-text"
+                                class="text-pink-dark font-bold underline underline-offset-2 hover:text-black transition-colors"
+                                >Writing Better Alt Text: A Guide for the Web</a
+                            >, on giving images descriptions that earn their
+                            place
+                        </li>
+                    </ul>
+                </ContentCard>
+            </div>
+        </section>
+
+        <!-- Speaking and writing -->
+        <section aria-labelledby="speaking-heading">
+            <SectionHeading id="speaking-heading" colour="blue">
+                Speaking &amp; Writing
+            </SectionHeading>
+
+            <div class="m-4 mt-0 lg:mx-0 flex flex-col lg:flex-row gap-4">
+                <ContentCard colour="lime" class="lg:flex-1">
+                    <ul class="font-kanit font-medium md:text-lg space-y-3">
+                        {
+                            speaking.map((item) => (
+                                <li>
+                                    <span class="font-bold">{item.text}</span>
+                                    <span class="block italic">
+                                        {item.detail}
+                                    </span>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </ContentCard>
+
+                <ContentCard colour="white" class="lg:flex-1 flex flex-col">
+                    <p class="font-kanit font-medium md:text-lg">
+                        I write about accessibility and front-end craft, and
+                        I've spoken at conferences and meetups on Elixir,
+                        testing and picking up new languages.
+                    </p>
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <a
+                            href="/talks"
+                            class="font-kanit font-bold uppercase italic tracking-wider bg-blue border-4 border-black rounded-md px-4 py-2 hover:bg-black hover:text-blue transition-colors"
+                        >
+                            See my talks
+                        </a>
+                        <a
+                            href="/blog"
+                            class="font-kanit font-bold uppercase italic tracking-wider bg-pink border-4 border-black rounded-md px-4 py-2 hover:bg-black hover:text-pink transition-colors"
+                        >
+                            Read the blog
+                        </a>
+                    </div>
+                </ContentCard>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section aria-labelledby="contact-heading">
+            <SectionHeading id="contact-heading" colour="pink">
+                Get In Touch
+            </SectionHeading>
+
+            <div class="m-4 mt-0 lg:mx-0 mb-10">
+                <ContentCard colour="orange">
+                    <p
+                        class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl"
+                    >
+                        I'm always open to a chat — about a role, a problem
+                        you're stuck on, or accessibility work in general.
+                    </p>
+                    <a
+                        href="mailto:theoharris.dev@gmail.com"
+                        class="inline-block mt-4 font-kanit font-bold uppercase italic tracking-wider text-lg bg-white border-4 border-black rounded-md px-6 py-3 hover:bg-black hover:text-white transition-colors"
+                    >
+                        theoharris.dev@gmail.com
+                    </a>
+                </ContentCard>
+            </div>
+        </section>
+    </main>
+</BaseLayout>

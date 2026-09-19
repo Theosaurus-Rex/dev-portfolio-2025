@@ -52,6 +52,15 @@ const currentPath = Astro.url.pathname;
                 Home
             </a>
             <a
+                href="/about"
+                class:list={[
+                    "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",
+                    { "text-blue bg-black": currentPath.startsWith("/about") },
+                ]}
+            >
+                About
+            </a>
+            <a
                 href="/blog"
                 class:list={[
                     "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",

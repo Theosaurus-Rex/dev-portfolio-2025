@@ -53,10 +53,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <title>{pageTitle}</title>
   </head>
-  <body class="bg-cream min-h-screen">
+  <!-- Column layout so the footer sits at the bottom on pages short enough not to fill the viewport -->
+  <body class="bg-cream min-h-screen flex flex-col">
     <PageHeader />
     <MobileMenu />
-    <slot />
+    <div class="flex-1">
+      <slot />
+    </div>
     <PageFooter />
   </body>
 </html>

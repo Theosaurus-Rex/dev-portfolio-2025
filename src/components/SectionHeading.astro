@@ -1,0 +1,38 @@
+---
+interface Props {
+  id: string;
+  colour?: keyof typeof colours;
+}
+
+const colours = {
+  orange: 'text-orange',
+  blue: 'text-blue',
+  pink: 'text-pink',
+  purple: 'text-purple',
+} as const;
+
+const { id, colour = 'orange' } = Astro.props;
+---
+
+<div class="flex items-center w-full">
+  <h2
+    id={id}
+    class:list={[
+      /*
+        min-w-0 lets the heading wrap instead of holding its min-content width,
+        which otherwise shoves the rule past the viewport on narrow screens.
+      */
+      'font-climate-crisis uppercase font-bold text-3xl md:text-4xl xl:text-5xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet tracking-wider min-w-0',
+      colours[colour],
+    ]}
+  >
+    <slot />
+  </h2>
+  <!--
+    Top border only: a full `border` gives the rule 1px of left and right
+    border each, which it cannot shrink away, so the row overflows. flex-1
+    rather than w-full so the rule claims the leftover width instead of
+    demanding 100% and squeezing the heading onto extra lines.
+  -->
+  <hr class="flex-1 border-t-2 md:border-t-4 border-black" />
+</div>

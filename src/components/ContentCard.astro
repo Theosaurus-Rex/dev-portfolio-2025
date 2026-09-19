@@ -1,0 +1,25 @@
+---
+interface Props {
+  colour?: keyof typeof fills;
+  class?: string;
+}
+
+/*
+  Tailwind scans source for complete class strings, so the fills have to be
+  spelled out rather than interpolated from the prop.
+*/
+const fills = {
+  blue: 'bg-blue',
+  pink: 'bg-pink',
+  purple: 'bg-purple',
+  orange: 'bg-orange',
+  lime: 'bg-lime',
+  white: 'bg-white',
+} as const;
+
+const { colour = 'blue', class: className = '' } = Astro.props;
+---
+
+<div class:list={['p-4 border-4 border-black rounded-md', fills[colour], className]}>
+  <slot />
+</div>

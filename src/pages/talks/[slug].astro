@@ -24,7 +24,7 @@ const formattedDate = new Date(date).toLocaleDateString("en-US", {
 ---
 
 <BaseLayout title={title} description={description}>
-  <main class="flex flex-col items-center bg-cream">
+  <main class="flex flex-col items-center bg-cream px-4">
     <div class="my-12 text-center">
       <h1 class="text-4xl text-gray-900 font-bold">{title}</h1>
       <p class="font-bold uppercase italic mt-4 text-xl">
@@ -32,14 +32,21 @@ const formattedDate = new Date(date).toLocaleDateString("en-US", {
       </p>
     </div>
 
-    <iframe
-      width="540"
-      height="315"
-      src={videoUrl}
-      title={title}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen
-    ></iframe>
+    <!--
+      The embed sits in an aspect-ratio box rather than carrying a fixed pixel
+      width, which used to overflow the viewport on phones.
+    -->
+    <div class="w-full max-w-[560px] aspect-video">
+      <iframe
+        width="560"
+        height="315"
+        src={videoUrl}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        class="w-full h-full"
+      ></iframe>
+    </div>
 
     <article class="prose lg:prose-xl mt-6">
       <Content />

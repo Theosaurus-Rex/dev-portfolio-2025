@@ -51,16 +51,9 @@ const work = [
         points: [
             "Designed and built the UI for pre-billing verification and multi-authorization rollover flows, working from ambiguous requirements through to shipped interfaces",
             "Built a form builder feature and championed accessible branding options as part of the platform's design system",
-            "Set the project's design system up from scratch and introduced a PR template to raise team-wide review quality",
+            "Crafted the project's design system from scratch and introduced a PR template to raise team-wide review quality",
         ],
-        tech: [
-            "React",
-            "Capacitor",
-            "Elixir",
-            "Phoenix",
-            "LiveView",
-            "Ash",
-        ],
+        tech: ["React", "Capacitor", "Elixir", "Phoenix", "LiveView", "Ash"],
     },
     {
         title: "Fast-fashion retail group",
@@ -122,9 +115,7 @@ const speaking = [
 
             <div class="m-4 lg:mx-0">
                 <ContentCard colour="lime">
-                    <p
-                        class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-3xl"
-                    >
+                    <p class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl xl:text-3xl">
                         Design engineer in Sydney. I trained in visual arts
                         before moving into software, and I've spent five years
                         building products end-to-end, from UX flows and
@@ -141,9 +132,7 @@ const speaking = [
                 Art School, Then Software
             </SectionHeading>
 
-            <div
-                class="m-4 mt-0 lg:mx-0 flex flex-col lg:flex-row gap-4 lg:items-stretch"
-            >
+            <div class="m-4 mt-0 lg:mx-0 flex flex-col lg:flex-row gap-4 lg:items-stretch">
                 <ContentCard colour="white" class="lg:flex-1">
                     <p class="font-kanit font-medium md:text-lg">
                         I came to software from visual arts, and it shaped what
@@ -157,13 +146,14 @@ const speaking = [
 
                 <ContentCard colour="white" class="lg:flex-1">
                     <p class="font-kanit font-medium md:text-lg">
-                        Five years in, I still work across both sides. I've been
-                        a technical consulting engineer at Alembic since January
-                        2022, embedded in teams of two to four across
-                        healthcare, e-commerce and automotive. The job is
-                        usually to take a loosely-scoped idea and hand back a
-                        shipped feature, so I scope it, write the tickets,
-                        design the UI, build it, document it and QA it.
+                        Five years in, I now work across the entire product
+                        development lifecycleß. I've been a technical consulting
+                        engineer at Alembic since January 2022, embedded in
+                        teams of two to four across healthcare, e-commerce and
+                        automotive. The job is usually to take a loosely-scoped
+                        idea and hand back a shipped feature, so I scope it,
+                        write the tickets, design the UI, build it, document it
+                        and QA it.
                     </p>
                 </ContentCard>
             </div>
@@ -175,21 +165,17 @@ const speaking = [
                 What I Do
             </SectionHeading>
 
-            <div
-                class="m-4 mt-0 lg:mx-0 flex flex-col xl:flex-row gap-4 xl:items-stretch"
-            >
-                {
-                    practices.map((practice) => (
-                        <ContentCard colour={practice.colour} class="xl:flex-1">
-                            <h3 class="font-kanit text-2xl font-bold uppercase italic">
-                                {practice.title}
-                            </h3>
-                            <p class="font-kanit font-medium mt-2">
-                                {practice.body}
-                            </p>
-                        </ContentCard>
-                    ))
-                }
+            <div class="m-4 mt-0 lg:mx-0 flex flex-col xl:flex-row gap-4 xl:items-stretch">
+                {practices.map((practice) => (
+                    <ContentCard colour={practice.colour} class="xl:flex-1">
+                        <h3 class="font-kanit text-2xl font-bold uppercase italic">
+                            {practice.title}
+                        </h3>
+                        <p class="font-kanit font-medium mt-2">
+                            {practice.body}
+                        </p>
+                    </ContentCard>
+                ))}
             </div>
         </section>
 
@@ -204,37 +190,30 @@ const speaking = [
                 rather than by name.
             </p>
 
-            <div
-                class="m-4 mt-0 lg:mx-0 grid grid-cols-1 xl:grid-cols-2 gap-4 items-stretch"
-            >
-                {
-                    work.map((project) => (
-                        <ContentCard
-                            colour={project.colour}
-                            class="flex flex-col"
-                        >
-                            <h3 class="font-kanit text-2xl font-bold uppercase italic">
-                                {project.title}
-                            </h3>
-                            <p class="font-kanit font-bold italic">
-                                {project.sector}
-                            </p>
-                            <p class="font-kanit font-medium mt-2">
-                                {project.intro}
-                            </p>
-                            <ul class="font-kanit font-medium mt-2 list-disc list-outside pl-5 space-y-1.5">
-                                {project.points.map((point) => (
-                                    <li>{point}</li>
-                                ))}
-                            </ul>
-                            <ul class="flex flex-wrap gap-1.5 mt-4 pt-2">
-                                {project.tech.map((item) => (
-                                    <Pill text={item} />
-                                ))}
-                            </ul>
-                        </ContentCard>
-                    ))
-                }
+            <div class="m-4 mt-0 lg:mx-0 grid grid-cols-1 xl:grid-cols-2 gap-4 items-stretch">
+                {work.map((project) => (
+                    <ContentCard colour={project.colour} class="flex flex-col">
+                        <h3 class="font-kanit text-2xl font-bold uppercase italic">
+                            {project.title}
+                        </h3>
+                        <p class="font-kanit font-bold italic">
+                            {project.sector}
+                        </p>
+                        <p class="font-kanit font-medium mt-2">
+                            {project.intro}
+                        </p>
+                        <ul class="font-kanit font-medium mt-2 list-disc list-outside pl-5 space-y-1.5">
+                            {project.points.map((point) => (
+                                <li>{point}</li>
+                            ))}
+                        </ul>
+                        <ul class="flex flex-wrap gap-1.5 mt-4 pt-2">
+                            {project.tech.map((item) => (
+                                <Pill text={item} />
+                            ))}
+                        </ul>
+                    </ContentCard>
+                ))}
             </div>
         </section>
 
@@ -252,16 +231,19 @@ const speaking = [
                         available to everyone and one that silently excludes
                         marginalised groups.
                     </p>
-                    <ul
-                        class="font-kanit font-medium md:text-lg mt-4 list-disc list-outside pl-5 space-y-2"
-                    >
-                        {accessibility.map((item) => <li>{item}</li>)}
+                    <ul class="font-kanit font-medium md:text-lg mt-4 list-disc list-outside pl-5 space-y-2">
+                        {accessibility.map((item) => (
+                            <li>{item}</li>
+                        ))}
                         <li>
-                            Wrote <a
+                            Wrote{" "}
+                            <a
                                 href="/blog/writing-better-alt-text"
                                 class="text-pink-dark font-bold underline underline-offset-2 hover:text-black transition-colors"
-                                >Writing Better Alt Text: A Guide for the Web</a
-                            >, on giving images descriptions that earn their
+                            >
+                                Writing Better Alt Text: A Guide for the Web
+                            </a>
+                            , on giving images descriptions that earn their
                             place
                         </li>
                     </ul>
@@ -278,16 +260,12 @@ const speaking = [
             <div class="m-4 mt-0 lg:mx-0 flex flex-col lg:flex-row gap-4">
                 <ContentCard colour="lime" class="lg:flex-1">
                     <ul class="font-kanit font-medium md:text-lg space-y-3">
-                        {
-                            speaking.map((item) => (
-                                <li>
-                                    <span class="font-bold">{item.text}</span>
-                                    <span class="block italic">
-                                        {item.detail}
-                                    </span>
-                                </li>
-                            ))
-                        }
+                        {speaking.map((item) => (
+                            <li>
+                                <span class="font-bold">{item.text}</span>
+                                <span class="block italic">{item.detail}</span>
+                            </li>
+                        ))}
                     </ul>
                 </ContentCard>
 
@@ -323,9 +301,7 @@ const speaking = [
 
             <div class="m-4 mt-0 lg:mx-0 mb-10">
                 <ContentCard colour="orange">
-                    <p
-                        class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl"
-                    >
+                    <p class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl">
                         I'm always open to a chat about a role, a problem you're
                         stuck on, or accessibility work in general.
                     </p>

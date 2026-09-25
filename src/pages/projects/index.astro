@@ -11,13 +11,14 @@ const projects = (await getCollection('projects')).sort((a, b) => {
 ---
 
 <BaseLayout title="Projects" description="Portfolio of web development projects">
-  <main class="flex flex-col items-center px-4 lg:px-24">
-    <h1 class="text-6xl font-bold text-gray-800 text-center my-8">
+  <main class="flex flex-col bg-cream min-h-screen lg:px-24">
+    <h1 class="font-climate-crisis text-orange uppercase font-bold text-4xl sm:text-6xl lg:text-8xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet lg:text-outline-desktop tracking-wider text-center">
       Projects
     </h1>
-    <div class="flex flex-col gap-6 w-full max-w-4xl">
-      {projects.map(project => (
-        <ProjectPreview project={project} />
+
+    <div class="m-4 lg:mx-0 mb-10 flex flex-col gap-8">
+      {projects.map((project, index) => (
+        <ProjectPreview project={project} index={index} />
       ))}
     </div>
 

@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentCard from '@/components/ContentCard.astro';
 import Pill from '@/components/Pill.astro';
+import ButtonLink from '@/components/ButtonLink.astro';
 import CaseStudyHeading from '@/components/case-study/CaseStudyHeading.astro';
 import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
@@ -60,23 +61,13 @@ const meta = [
 
         <div class="flex flex-wrap gap-3 mt-4">
           {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-kanit font-bold uppercase italic tracking-wider bg-blue border-4 border-black rounded-md px-4 py-2 hover:bg-black hover:text-blue transition-colors"
-            >
+            <ButtonLink href={liveUrl} colour="blue" external>
               View Live
-            </a>
+            </ButtonLink>
           )}
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-kanit font-bold uppercase italic tracking-wider bg-pink border-4 border-black rounded-md px-4 py-2 hover:bg-black hover:text-pink transition-colors"
-          >
+          <ButtonLink href={githubUrl} colour="pink" external>
             View Code
-          </a>
+          </ButtonLink>
         </div>
       </ContentCard>
     </div>
@@ -88,9 +79,9 @@ const meta = [
     </article>
 
     <div class="m-4 lg:mx-0 mb-10">
-      <a href="/projects" class="text-pink-dark hover:text-black font-bold">
+      <ButtonLink href="/projects" colour="white">
         ← Back to Projects
-      </a>
+      </ButtonLink>
     </div>
   </main>
 </BaseLayout>

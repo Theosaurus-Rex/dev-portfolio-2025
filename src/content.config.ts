@@ -22,14 +22,22 @@ const talks = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
-  schema: z.object({
-    name: z.string(),
-    description: z.string(),
-    githubUrl: z.string().url(),
-    liveUrl: z.string().url().optional(),
-    imageSrc: z.string(),
-  }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      description: z.string(),
+      githubUrl: z.string().url(),
+      liveUrl: z.string().url().optional(),
+      image: image(),
+      imageAlt: z.string(),
+      caseStudy: z.boolean().default(false),
+      status: z.string().optional(),
+      role: z.string().optional(),
+      timeline: z.string().optional(),
+      tools: z.array(z.string()).optional(),
+      order: z.number().optional(),
+    }),
 });
 
 export const collections = { blog, talks, projects };

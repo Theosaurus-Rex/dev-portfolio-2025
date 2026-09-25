@@ -1,0 +1,26 @@
+---
+interface Props {
+  cols?: 2 | 3 | 4;
+}
+
+/*
+  Tailwind scans source for complete class strings, so the column variants
+  have to be spelled out rather than interpolated from the prop.
+*/
+const colClasses = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-2 xl:grid-cols-3',
+  4: 'md:grid-cols-2 xl:grid-cols-4',
+} as const;
+
+const { cols = 2 } = Astro.props;
+---
+
+<div
+  class:list={[
+    'not-prose grid grid-cols-1 gap-4 my-8 [&>figure]:my-0',
+    colClasses[cols],
+  ]}
+>
+  <slot />
+</div>

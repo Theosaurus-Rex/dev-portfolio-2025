@@ -1,0 +1,96 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContentCard from '@/components/ContentCard.astro';
+import Pill from '@/components/Pill.astro';
+import CaseStudyHeading from '@/components/case-study/CaseStudyHeading.astro';
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const projects = await getCollection('projects', ({ data }) => data.caseStudy);
+  return projects.map(project => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { name, description, role, status, timeline, tools, githubUrl, liveUrl } = project.data;
+
+const meta = [
+  { label: 'Role', value: role },
+  { label: 'Status', value: status },
+  { label: 'Timeline', value: timeline },
+].filter(item => item.value);
+---
+
+<BaseLayout title={name} description={description}>
+  <main class="flex flex-col bg-cream min-h-screen lg:px-24">
+    <h1
+      class="font-climate-crisis text-orange uppercase font-bold text-4xl sm:text-6xl lg:text-8xl m-4 lg:my-8 lg:mx-0 text-outline-mobile md:text-outline-tablet lg:text-outline-desktop tracking-wider text-center"
+    >
+      {name}
+    </h1>
+
+    <div class="m-4 lg:mx-0">
+      <ContentCard colour="lime">
+        <p class="font-kanit font-bold lg:font-semibold md:text-xl lg:text-2xl">
+          {description}
+        </p>
+
+        {meta.length > 0 && (
+          <dl class="font-kanit mt-4 flex flex-wrap gap-x-8 gap-y-2">
+            {meta.map(item => (
+              <div>
+                <dt class="font-bold uppercase italic">{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+
+        {tools && tools.length > 0 && (
+          <ul class="flex flex-wrap gap-1.5 mt-4">
+            {tools.map(tool => (
+              <Pill text={tool} />
+            ))}
+          </ul>
+        )}
+
+        <div class="flex flex-wrap gap-3 mt-4">
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-kanit font-bold uppercase italic tracking-wider bg-blue border-4 border-black rounded-md px-4 py-2 hover:bg-black hover:text-blue transition-colors"
+            >
+              View Live
+            </a>
+          )}
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-kanit font-bold uppercase italic tracking-wider bg-pink border-4 border-black rounded-md px-4 py-2 hover:bg-black hover:text-pink transition-colors"
+          >
+            View Code
+          </a>
+        </div>
+      </ContentCard>
+    </div>
+
+    <article
+      class="m-4 lg:mx-0 prose prose-lg max-w-none font-kanit prose-headings:font-kanit prose-headings:text-black prose-p:font-medium prose-p:text-black prose-li:text-black prose-li:marker:text-black prose-p:max-w-[75ch] prose-ul:max-w-[75ch] prose-h3:max-w-[75ch] prose-a:text-pink-dark prose-a:font-bold hover:prose-a:text-black prose-strong:font-bold prose-code:before:content-none prose-code:after:content-none"
+    >
+      <Content components={{ h2: CaseStudyHeading }} />
+    </article>
+
+    <div class="m-4 lg:mx-0 mb-10">
+      <a href="/projects" class="text-pink-dark hover:text-black font-bold">
+        ← Back to Projects
+      </a>
+    </div>
+  </main>
+</BaseLayout>

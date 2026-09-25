@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  class?: string;
+}
+
+const { src, alt, caption, class: className = '' } = Astro.props;
+---
+
+<figure class:list={['not-prose my-8', className]}>
+  <div class="border-4 border-black rounded-md overflow-hidden bg-white">
+    <Image
+      src={src}
+      alt={alt}
+      widths={[480, 800, 1200, 1600]}
+      sizes="(min-width: 1024px) 60vw, 100vw"
+      loading="lazy"
+      class="w-full h-auto"
+    />
+  </div>
+  {caption && (
+    <figcaption class="font-kanit font-medium italic mt-2 text-base">
+      {caption}
+    </figcaption>
+  )}
+</figure>

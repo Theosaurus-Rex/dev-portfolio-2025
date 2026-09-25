@@ -1,0 +1,146 @@
+---
+name: Nuzlocke Tracker
+description: A tracker for Pokémon Nuzlocke runs that I designed and built myself, from lo-fi flows through to a live web app. It's still being built.
+caseStudy: true
+order: 1
+status: In progress
+role: Design and build, solo
+timeline: September 2026 – now
+tools: [Claude Design, React, TypeScript, Tailwind, shadcn/ui, DexieJS, PokéAPI]
+githubUrl: https://github.com/Theosaurus-Rex/nuzlocke-tracker
+liveUrl: https://nuzlockeruntracker.netlify.app
+image: ../../assets/images/projects/nuzlocke/cover.png
+imageAlt: A screenshot of the Nuzlocke Tracker's routes table, with a row for each route you can encounter a pokemon on
+---
+
+import Figure from '@/components/case-study/Figure.astro';
+import FigureGrid from '@/components/case-study/FigureGrid.astro';
+import Callout from '@/components/case-study/Callout.astro';
+
+import moodboard from '@/assets/images/projects/nuzlocke/moodboard.png';
+import lofiWeb from '@/assets/images/projects/nuzlocke/lofi-1a.png';
+import lofiMobile from '@/assets/images/projects/nuzlocke/lofi-1d.png';
+import dirDmg from '@/assets/images/projects/nuzlocke/hifi-3a.png';
+import dirPixel from '@/assets/images/projects/nuzlocke/hifi-3b.png';
+import dirBlock from '@/assets/images/projects/nuzlocke/hifi-3c.png';
+import dirTerminal from '@/assets/images/projects/nuzlocke/hifi-3d.png';
+import hifiCards from '@/assets/images/projects/nuzlocke/hifi-4a.png';
+import hifiRoutes from '@/assets/images/projects/nuzlocke/hifi-5a.png';
+import hifiRoutesMobile from '@/assets/images/projects/nuzlocke/hifi-6c.png';
+
+## The Brief
+
+A Nuzlocke is a challenge run of a Pokémon game with rules you set yourself. You can only catch the first Pokémon you meet on each route. You nickname everything you catch. If a mon faints, it's dead, and it goes in the graveyard. The rules are simple, but keeping track of them over a thirty-hour run isn't.
+
+I'm building this for my own runs. I wanted something I could keep building and customising over time, with randomised runs, romhacks and challenge variants like Soul Link Nuzlockes on the list for later. Those are all future plans. The first version does one game, HeartGold, and does it well.
+
+## Two Ways to Play
+
+Before drawing anything, I had to know where the tracker would be used. There are two setups I care about equally:
+
+- **Emulator on a desktop**, with the tracker open on a second screen.
+- **A handheld on the couch or in bed**, with a phone next to you.
+
+Both mean the tracker is the thing you glance at between turns, not the thing you're focused on. Logging an encounter has to be fast, and the route list has to tell you the state of your run at a glance. Those two screens got the most care.
+
+## Flows Before Style
+
+I started by writing down the basic features I wanted, then gave that list to Claude Design to get some rough lo-fi mockups. It got me to a first draft quickly, but the draft needed a lot of work before I trusted it:
+
+- **It didn't understand why some fields had to be certain data types.** Species and moves, for example, need to be picked from a list, not typed as free text, because a typo in a species name breaks everything that depends on it.
+- **It left things out for mons in different states.** Its fainted mons dropped their type, moves and ability. But you still want to see all of that on a dead mon, whether you're working out what went wrong or just remembering them.
+- **It used inconsistent patterns.** One screen let you drag and drop to reorder, and another with a similar layout didn't.
+- **It had layout and alignment bugs.** I fixed a lot of these by hand, using the advanced design panel and editing the CSS directly.
+
+I kept changing the layouts until I was confident the core UX flows were right. The styling in these frames is deliberately rough: it's a sketch, not a visual decision.
+
+<Figure src={lofiWeb} alt="Lo-fi wireframe of the desktop routes table. A sidebar has the current run, navigation and rules checkboxes. The main panel lists routes with their encounter, level and a status pill." caption="Lo-fi desktop: the routes table, which is the screen you'll use most." />
+
+<Figure src={lofiMobile} alt="Nine lo-fi mobile screens in a grid: run list, new run setup, route list, encounter detail, party, boxes, graveyard, gyms and Elite Four, and logging a death." caption="The whole mobile flow in lo-fi, nine screens drawn before any visual direction." />
+
+## The Moodboard
+
+Once the flows were settled, I went looking for visual inspiration. The notes on the board are the ones I wrote at the time.
+
+<Figure src={moodboard} alt="A moodboard of UI screenshots and pixel art, each with a sticky note. They include a Pokémon tracker with dense mon cards, a dusty blue and cream pixel-art town, a Game Boy style calculator, retro handhelds in greyscale and muted colours, a UI with thin borders and hard block shadows, pixel-art form inputs, and a digital-clock style font." caption="The moodboard, with my notes on what I liked about each piece and what I wasn't sure about." />
+
+A few questions came out of it that I'd have to answer later. Was the existing tracker's detail distracting? How would thin borders and block shadows work on mobile? And the pixel-art form inputs would be sick, but not for the MVP.
+
+## Four Directions, One Pick
+
+I drafted four visual directions from the board. Each one comes from a different part of it.
+
+<FigureGrid cols={2}>
+  <Figure src={dirDmg} alt="The DMG direction sheet: a four-tone Game Boy green palette, pixel headings and a sample route list." caption="DMG. The Game Boy font and greyscale." />
+  <Figure src={dirPixel} alt="The Pixel Field direction sheet: dusty blue and cream, rounded pill buttons, pixel headings and a party card with a sprite over its edge." caption="Pixel Field. The dusty blue on cream, the soft backgrounds behind cards, and sprites poking over the rows." />
+  <Figure src={dirBlock} alt="The Block Shadow direction sheet: black, off-white, grey, red, green and yellow swatches, Space Grotesk and Share Tech Mono specimens, square chips with hard offset shadows, and a sample route table." caption="Block Shadow. The thin borders, block shadows and digital clock numbers." />
+  <Figure src={dirTerminal} alt="The Terminal direction sheet: a near-black background, a single green accent, and party cards with thin stat bars and sprites above them." caption="Terminal. The existing tracker's mon views, with the detail cut back to thin stat bars." />
+</FigureGrid>
+
+I went with **Block Shadow**. It was the one I liked most, but the bigger reason was contrast. I wanted the tracker to be as readable and clear as possible, and black hairlines on off-white with three strong accent colours give you that.
+
+That meant moving away from the retro feel of the moodboard, which was on purpose. Pixel fonts are fun, but not when you're checking your level cap mid-fight. I kept a bit of it: every number uses a mono font, Share Tech Mono, which is the digital clock idea from the board. It's an accent, not the main typeface.
+
+## Hi-Fi
+
+With the direction picked, I used Claude Design to apply it to the lo-fi screens. Then I did a lot more by hand, both tweaking the visuals directly and re-prompting to refine screens and check the flows still made sense.
+
+<FigureGrid cols={2}>
+  <Figure src={hifiRoutes} alt="Hi-fi desktop routes table in Block Shadow. A yellow Routes tab in the sidebar, a row of summary chips, and route rows with sprites, type badges, levels and status chips." caption="Desktop routes." />
+  <Figure src={hifiRoutesMobile} alt="Hi-fi mobile routes list in Block Shadow, with summary chips at the top, route rows with sprites and chips, and a five-tab bar at the bottom." caption="The same screen on mobile." />
+</FigureGrid>
+
+What changed from lo-fi to hi-fi:
+
+- **Rounded pills became square chips**, and every chip says its status in words, so colour is never the only clue.
+- **A row of summary chips went at the top of the routes list**, so you can see how the run's going without counting rows.
+- **A type column and sprites went into the table**, so you can recognise each mon at a glance.
+- **Rules went from a checkbox list to chips.** You set them once when you start a run, so after that they just need to be visible.
+
+The sprites "poking over" the rows from the moodboard made it in too, but only on the party cards. That's where there's room for them.
+
+<Figure src={hifiCards} alt="Block Shadow party cards. Four large cards, each with a sprite breaking out of the top edge, type badges, a nickname, moves, held item and ability. One fainted card has a red shadow and still shows all its information. Below are three compact box cards and a large encounter detail card with stat bars." caption="Party, box and detail cards. The fainted card keeps all of its info and shows its state with a red shadow and a skull." />
+
+## Design to Code
+
+I'm building to the hi-fi frames, and I wanted the build to match them closely. So I didn't eyeball the palette, borders and shadows off a screenshot. I measured them from the canvas markup and wrote them down as tokens. The frames stay the source of truth, and where the direction sheet and the frames disagree, the frames win because they're the later work.
+
+
+### Where the design met the browser
+
+- **Desktop needed scaling up.** The desktop frames are drawn on a 940px canvas, which looks tiny on a real monitor. From 768px up, the app sets the root font size to 125%, so type, controls and spacing all scale together. The 1.5px hairline borders don't scale, because a hairline is a hairline and it's what the whole direction is named after.
+- **Block shadows on mobile.** On the moodboard I wasn't sure how block shadows would work on mobile. The direction sheet said to drop them to 2px, but the drawn mobile screens kept 3px and looked right. I built to the screens.
+- **Filling in the type colours.** The frames only drew the ten Pokémon types the mock data happened to use. I designed the other eight in the same colour family and checked that dark text passes WCAG AA on all eighteen. The lowest is 6.35:1.
+- **The number font.** Every number is in Share Tech Mono, which is most of what makes the direction feel the way it does. But wrapping numbers in their own elements broke spacing inside flex containers: `12 CAUGHT` lost its space and `Active (1)` gained two. Neither showed up in tests, so I only found them by looking at the screens in a browser.
+- **The fonts are bundled** and not loaded from Google Fonts. You might be mid-run on a phone with no signal, and the tracker should still look right.
+
+### Decisions I made during the build
+
+- **Row actions moved into a menu.** The frames had inline buttons on each row. In the browser that was too cluttered, so the actions went into one "⋯" menu per row, and the whole row became the tap target for logging an encounter or viewing a mon. That cuts the visual noise, and a whole-row tap target is much easier to hit than a small button.
+- **"Gyms" became "Fights".** The screen also has to cover the Elite Four and the Champion, so "Gyms" was too narrow a word.
+- **Picking, not typing.** Species and moves are chosen from a list, not typed in. If you type a name the Pokédex doesn't know, the form won't save until you pick one from the list or undo. And you can't add the same move twice. This is what the first lo-fi draft got wrong, fixed properly in code.
+- **Pickers show every generation.** In a randomised run or a romhack, anything can turn up anywhere. Blocking someone from logging what they actually caught is worse than showing them too many options.
+- **Types match the game you're playing.** Types and move stats come from each Pokémon's data for your game's generation. Clefairy is Normal in HeartGold and Fairy in later games, and showing the modern value would be visibly wrong.
+- **Mistakes can be undone.** In a Nuzlocke, a misclick shouldn't be permanent. You'll be able to reset a wrongly logged encounter, even if that mon has since died, because it fixes a logging mistake and doesn't undo a death in the game. The confirmation spells out exactly what will be deleted, and focus starts on Cancel. This one is in progress.
+
+### Designed to keep your run safe
+
+The tracker is local-first. There's no account and no server, and your run stays on your device. The catch is that iOS Safari can clear a site's storage after seven days without a visit. For a permadeath tracker, losing a thirty-route run that way would be the one unforgivable bug, so JSON export and import was built in from the start as the backup.
+
+<Callout colour="blue" title="Accessibility">
+  <p>Anything that uses colour also says what it means in words. Status chips and type badges always carry their label, so colourblind users aren't relying on colour alone.</p>
+  <p>The species and move pickers work fully by keyboard. Every field reports its errors to screen readers, and the row menus have names like "Actions for Route 29" so you know which row you're on.</p>
+  <p>I'm testing keyboard use all the time during the build, so that logging a run is quick and easy without a mouse.</p>
+</Callout>
+
+**Press states and motion** were never drawn, and that was on purpose. I'd rather work them out in a real browser than design something up front that doesn't work in practice. Right now, buttons move down a pixel when pressed, and I'm still working on the rest.
+
+## What's Next
+
+It's still being built. The new run screen, the routes list and the encounter modal are mostly done but still being iterated on. After that:
+
+- Finishing the reset-encounter flow, then the party, boxes, graveyard and fights screens.
+- Empty states, which only exist for the empty party slot right now.
+- An installable mobile app via Capacitor, with the storage layer already set up so it can switch to native SQLite.
+- Romhacks, more randomiser support and Soul Link runs. That's why I built this myself in the first place.
+- Maybe, one day, those pixel-art form inputs from the moodboard.

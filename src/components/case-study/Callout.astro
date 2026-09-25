@@ -1,0 +1,21 @@
+---
+import ContentCard from '@/components/ContentCard.astro';
+
+interface Props {
+  colour?: 'blue' | 'pink' | 'purple' | 'orange' | 'lime' | 'white';
+  title?: string;
+}
+
+const { colour = 'lime', title } = Astro.props;
+---
+
+<ContentCard colour={colour} class="not-prose my-8">
+  {title && (
+    <p class="font-kanit text-xl font-bold uppercase italic">
+      {title}
+    </p>
+  )}
+  <div class="font-kanit font-medium md:text-lg mt-2 [&_p+p]:mt-3">
+    <slot />
+  </div>
+</ContentCard>

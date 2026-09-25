@@ -1,0 +1,15 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div class="not-prose">
+  <SectionHeading id={id} colour="blue">
+    <slot />
+  </SectionHeading>
+</div>

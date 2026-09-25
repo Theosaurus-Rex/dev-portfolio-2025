@@ -1,0 +1,53 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'class'> {
+  href: string;
+  colour?: keyof typeof fills;
+  size?: keyof typeof sizes;
+  external?: boolean;
+  class?: string;
+}
+
+/*
+  Tailwind scans source for complete class strings, so the fills have to be
+  spelled out rather than interpolated from the prop.
+*/
+const fills = {
+  blue: 'bg-blue hover:text-blue',
+  pink: 'bg-pink hover:text-pink',
+  purple: 'bg-purple hover:text-purple',
+  orange: 'bg-orange hover:text-orange',
+  lime: 'bg-lime hover:text-lime',
+  white: 'bg-white hover:text-white',
+} as const;
+
+const sizes = {
+  md: 'px-4 py-2',
+  lg: 'text-lg px-6 py-3',
+} as const;
+
+const {
+  href,
+  colour = 'blue',
+  size = 'md',
+  external = false,
+  class: className = '',
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  class:list={[
+    'inline-block text-black font-kanit font-bold uppercase italic tracking-wider border-4 border-black rounded-md hover:bg-black transition-colors focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-black',
+    fills[colour],
+    sizes[size],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</a>

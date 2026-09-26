@@ -9,24 +9,42 @@ timeline: September 2026 – now
 tools: [Claude Design, React, TypeScript, Tailwind, shadcn/ui, DexieJS, PokéAPI]
 githubUrl: https://github.com/Theosaurus-Rex/nuzlocke-tracker
 liveUrl: https://nuzlockeruntracker.netlify.app
-image: ../../assets/images/projects/nuzlocke/cover.png
+image: ../../assets/images/projects/nuzlocke/crop-hifi-routes-desktop.png
 imageAlt: A screenshot of the Nuzlocke Tracker's routes table, with a row for each route you can encounter a pokemon on
+hero: ../../assets/images/projects/nuzlocke/crop-hifi-party.png
+heroAlt: Block Shadow party cards. Four cards, each with a sprite breaking out of the top edge, type badges, a nickname, moves, held item and ability. One has a yellow OVER CAP chip. The fainted card has a red shadow and a skull, and still shows all its information.
 ---
 
 import Figure from '@/components/case-study/Figure.astro';
 import FigureGrid from '@/components/case-study/FigureGrid.astro';
 import Callout from '@/components/case-study/Callout.astro';
+import DeviceCompare from '@/components/case-study/DeviceCompare.astro';
+import ProcessStrip from '@/components/case-study/ProcessStrip.astro';
 
-import moodboard from '@/assets/images/projects/nuzlocke/moodboard.png';
-import lofiWeb from '@/assets/images/projects/nuzlocke/lofi-1a.png';
-import lofiMobile from '@/assets/images/projects/nuzlocke/lofi-1d.png';
-import dirDmg from '@/assets/images/projects/nuzlocke/hifi-3a.png';
-import dirPixel from '@/assets/images/projects/nuzlocke/hifi-3b.png';
-import dirBlock from '@/assets/images/projects/nuzlocke/hifi-3c.png';
-import dirTerminal from '@/assets/images/projects/nuzlocke/hifi-3d.png';
-import hifiCards from '@/assets/images/projects/nuzlocke/hifi-4a.png';
-import hifiRoutes from '@/assets/images/projects/nuzlocke/hifi-5a.png';
-import hifiRoutesMobile from '@/assets/images/projects/nuzlocke/hifi-6c.png';
+import moodboard from '@/assets/images/projects/nuzlocke/crop-moodboard.png';
+import lofiWeb from '@/assets/images/projects/nuzlocke/crop-lofi-desktop.png';
+import lofiRoutes from '@/assets/images/projects/nuzlocke/crop-lofi-mobile-routes.png';
+import lofiEncounter from '@/assets/images/projects/nuzlocke/crop-lofi-mobile-encounter.png';
+import lofiDeath from '@/assets/images/projects/nuzlocke/crop-lofi-mobile-death.png';
+import dirDmg from '@/assets/images/projects/nuzlocke/crop-dir-dmg.png';
+import dirPixel from '@/assets/images/projects/nuzlocke/crop-dir-pixel.png';
+import dirBlock from '@/assets/images/projects/nuzlocke/crop-dir-block.png';
+import dirTerminal from '@/assets/images/projects/nuzlocke/crop-dir-terminal.png';
+import hifiRoutes from '@/assets/images/projects/nuzlocke/crop-hifi-routes-desktop.png';
+import hifiRoutesMobile from '@/assets/images/projects/nuzlocke/crop-hifi-routes-mobile.png';
+import hifiEncounter from '@/assets/images/projects/nuzlocke/crop-hifi-encounter-desktop.png';
+import hifiEncounterMobile from '@/assets/images/projects/nuzlocke/crop-hifi-encounter-mobile.png';
+
+<ProcessStrip
+  steps={[
+    { label: 'Brief', href: '#the-brief' },
+    { label: 'Flows', href: '#flows-before-style' },
+    { label: 'Moodboard', href: '#the-moodboard' },
+    { label: 'Directions', href: '#four-directions-one-pick' },
+    { label: 'Hi-fi', href: '#hi-fi' },
+    { label: 'Build', href: '#design-to-code' },
+  ]}
+/>
 
 ## The Brief
 
@@ -56,13 +74,19 @@ I kept changing the layouts until I was confident the core UX flows were right. 
 
 <Figure src={lofiWeb} alt="Lo-fi wireframe of the desktop routes table. A sidebar has the current run, navigation and rules checkboxes. The main panel lists routes with their encounter, level and a status pill." caption="Lo-fi desktop: the routes table, which is the screen you'll use most." />
 
-<Figure src={lofiMobile} alt="Nine lo-fi mobile screens in a grid: run list, new run setup, route list, encounter detail, party, boxes, graveyard, gyms and Elite Four, and logging a death." caption="The whole mobile flow in lo-fi, nine screens drawn before any visual direction." />
+<FigureGrid phones>
+  <Figure width="text" src={lofiRoutes} alt="Lo-fi mobile route list. Each route has a status circle, and pending routes have a plus button to log an encounter." caption="Route list." />
+  <Figure width="text" src={lofiEncounter} alt="Lo-fi mobile encounter detail. Caught, Missed and Skipped toggles, then species, nickname, gender, levels, nature, ability, held item, status and moves." caption="Logging an encounter." />
+  <Figure width="text" src={lofiDeath} alt="Lo-fi mobile log a death screen. Pick who died and what they lost to, choose a cause, then add the trainer, where it happened and notes." caption="Logging a death." />
+</FigureGrid>
+
+Three of the nine mobile screens I drew in lo-fi, all before any visual direction.
 
 ## The Moodboard
 
 Once the flows were settled, I went looking for visual inspiration. The notes on the board are the ones I wrote at the time.
 
-<Figure src={moodboard} alt="A moodboard of UI screenshots and pixel art, each with a sticky note. They include a Pokémon tracker with dense mon cards, a dusty blue and cream pixel-art town, a Game Boy style calculator, retro handhelds in greyscale and muted colours, a UI with thin borders and hard block shadows, pixel-art form inputs, and a digital-clock style font." caption="The moodboard, with my notes on what I liked about each piece and what I wasn't sure about." />
+<Figure frame={false} src={moodboard} alt="A moodboard of UI screenshots and pixel art, each with a sticky note. They include a Pokémon tracker with dense mon cards, a dusty blue and cream pixel-art town, a Game Boy style calculator, retro handhelds in greyscale and muted colours, a UI with thin borders and hard block shadows, pixel-art form inputs, and a digital-clock style font." caption="The moodboard, with my notes on what I liked about each piece and what I wasn't sure about." />
 
 A few questions came out of it that I'd have to answer later. Was the existing tracker's detail distracting? How would thin borders and block shadows work on mobile? And the pixel-art form inputs would be sick, but not for the MVP.
 
@@ -71,10 +95,10 @@ A few questions came out of it that I'd have to answer later. Was the existing t
 I drafted four visual directions from the board. Each one comes from a different part of it.
 
 <FigureGrid cols={2}>
-  <Figure src={dirDmg} alt="The DMG direction sheet: a four-tone Game Boy green palette, pixel headings and a sample route list." caption="DMG. The Game Boy font and greyscale." />
-  <Figure src={dirPixel} alt="The Pixel Field direction sheet: dusty blue and cream, rounded pill buttons, pixel headings and a party card with a sprite over its edge." caption="Pixel Field. The dusty blue on cream, the soft backgrounds behind cards, and sprites poking over the rows." />
-  <Figure src={dirBlock} alt="The Block Shadow direction sheet: black, off-white, grey, red, green and yellow swatches, Space Grotesk and Share Tech Mono specimens, square chips with hard offset shadows, and a sample route table." caption="Block Shadow. The thin borders, block shadows and digital clock numbers." />
-  <Figure src={dirTerminal} alt="The Terminal direction sheet: a near-black background, a single green accent, and party cards with thin stat bars and sprites above them." caption="Terminal. The existing tracker's mon views, with the detail cut back to thin stat bars." />
+  <Figure width="text" src={dirDmg} alt="The DMG direction sheet: a four-tone Game Boy green palette, pixel headings, and chunky square chips and inputs." caption="DMG. The Game Boy font and greyscale." />
+  <Figure width="text" src={dirPixel} alt="The Pixel Field direction sheet: dusty blue and cream swatches, pixel headings over a humanist body font, and rounded pill buttons." caption="Pixel Field. The dusty blue on cream, the soft backgrounds behind cards, and sprites poking over the rows." />
+  <Figure width="text" src={dirBlock} alt="The Block Shadow direction sheet: black, off-white, grey, red, green and yellow swatches, Space Grotesk and Share Tech Mono specimens, and square chips with hard offset shadows." caption="Block Shadow. The thin borders, block shadows and digital clock numbers." />
+  <Figure width="text" src={dirTerminal} alt="The Terminal direction sheet: a near-black background, a single electric green accent, tracked uppercase headings and outlined chips." caption="Terminal. The existing tracker's mon views, with the detail cut right back." />
 </FigureGrid>
 
 I went with **Block Shadow**. It was the one I liked most, but the bigger reason was contrast. I wanted the tracker to be as readable and clear as possible, and black hairlines on off-white with three strong accent colours give you that.
@@ -85,10 +109,21 @@ That meant moving away from the retro feel of the moodboard, which was on purpos
 
 With the direction picked, I used Claude Design to apply it to the lo-fi screens. Then I did a lot more by hand, both tweaking the visuals directly and re-prompting to refine screens and check the flows still made sense.
 
-<FigureGrid cols={2}>
-  <Figure src={hifiRoutes} alt="Hi-fi desktop routes table in Block Shadow. A yellow Routes tab in the sidebar, a row of summary chips, and route rows with sprites, type badges, levels and status chips." caption="Desktop routes." />
-  <Figure src={hifiRoutesMobile} alt="Hi-fi mobile routes list in Block Shadow, with summary chips at the top, route rows with sprites and chips, and a five-tab bar at the bottom." caption="The same screen on mobile." />
-</FigureGrid>
+<DeviceCompare
+  desktop={hifiRoutes}
+  desktopAlt="Hi-fi desktop routes table in Block Shadow. A yellow Routes tab in the sidebar, a row of summary chips, and route rows with sprites, type badges, levels and status chips."
+  mobile={hifiRoutesMobile}
+  mobileAlt="Hi-fi mobile routes list in Block Shadow, with summary chips at the top, route rows with sprites and chips, and a five-tab bar at the bottom."
+  caption="The routes screen, which you'll use most, on desktop and mobile."
+/>
+
+<DeviceCompare
+  desktop={hifiEncounter}
+  desktopAlt="Hi-fi desktop encounter modal for Sprout Tower. Caught, Missed and Skipped toggles, a species field with an Evolve button, then nickname, gender, levels, nature, ability, held item and moves."
+  mobile={hifiEncounterMobile}
+  mobileAlt="Hi-fi mobile encounter detail as a full-screen view, with the same fields stacked in one column and a save button at the bottom."
+  caption="Logging an encounter: a modal on desktop, a full screen on mobile."
+/>
 
 What changed from lo-fi to hi-fi:
 
@@ -97,9 +132,8 @@ What changed from lo-fi to hi-fi:
 - **A type column and sprites went into the table**, so you can recognise each mon at a glance.
 - **Rules went from a checkbox list to chips.** You set them once when you start a run, so after that they just need to be visible.
 
-The sprites "poking over" the rows from the moodboard made it in too, but only on the party cards. That's where there's room for them.
+The sprites "poking over" the rows from the moodboard made it in too, but only on the party cards at the top of this page. That's where there's room for them. The fainted card also shows the fix from the lo-fi stage: it keeps all of its info, and shows its state with a red shadow and a skull.
 
-<Figure src={hifiCards} alt="Block Shadow party cards. Four large cards, each with a sprite breaking out of the top edge, type badges, a nickname, moves, held item and ability. One fainted card has a red shadow and still shows all its information. Below are three compact box cards and a large encounter detail card with stat bars." caption="Party, box and detail cards. The fainted card keeps all of its info and shows its state with a red shadow and a skull." />
 
 ## Design to Code
 

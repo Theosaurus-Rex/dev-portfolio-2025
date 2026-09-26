@@ -32,7 +32,9 @@ const { id, colour = 'orange' } = Astro.props;
     Top border only: a full `border` gives the rule 1px of left and right
     border each, which it cannot shrink away, so the row overflows. flex-1
     rather than w-full so the rule claims the leftover width instead of
-    demanding 100% and squeezing the heading onto extra lines.
+    demanding 100% and squeezing the heading onto extra lines. shrink-0 and
+    min-w-8 keep it visible even when a narrow column wraps the heading to
+    multiple lines, which would otherwise starve it down to 0 width.
   -->
-  <hr class="flex-1 border-t-2 md:border-t-4 border-black" />
+  <hr class="flex-1 shrink-0 min-w-8 border-t-2 md:border-t-4 border-black" />
 </div>

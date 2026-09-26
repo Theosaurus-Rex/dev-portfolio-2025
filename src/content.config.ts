@@ -31,6 +31,8 @@ const projects = defineCollection({
       liveUrl: z.string().url().optional(),
       image: image(),
       imageAlt: z.string(),
+      hero: image().optional(),
+      heroAlt: z.string().optional(),
       caseStudy: z.boolean().default(false),
       status: z.string().optional(),
       role: z.string().optional(),

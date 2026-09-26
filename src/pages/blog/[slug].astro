@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import ButtonLink from '@/components/ButtonLink.astro';
 import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import type { GetStaticPaths } from 'astro';
@@ -44,9 +45,9 @@ const { title, description, date, imageUrl } = post.data;
 
       <!-- Back to blog link -->
       <div class="mt-12">
-        <a href="/blog" class="text-pink-dark hover:text-black font-bold">
+        <ButtonLink href="/blog" colour="white">
           ← Back to Blog
-        </a>
+        </ButtonLink>
       </div>
     </article>
   </main>

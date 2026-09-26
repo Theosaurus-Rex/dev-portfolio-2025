@@ -1,0 +1,29 @@
+---
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div class="not-prose case-study-heading">
+  <h2
+    id={id}
+    class="font-climate-crisis uppercase font-bold text-3xl md:text-4xl xl:text-5xl leading-tight mt-12 mb-6 text-blue text-outline-mobile md:text-outline-tablet tracking-wider"
+  >
+    <slot />
+  </h2>
+</div>
+
+<style is:global>
+  /* MDX headings can't take props, so the colour cycles by position. */
+  .case-study-heading:nth-child(4n + 2 of .case-study-heading) > h2 {
+    color: var(--color-pink);
+  }
+  .case-study-heading:nth-child(4n + 3 of .case-study-heading) > h2 {
+    color: var(--color-purple);
+  }
+  .case-study-heading:nth-child(4n + 4 of .case-study-heading) > h2 {
+    color: var(--color-orange);
+  }
+</style>

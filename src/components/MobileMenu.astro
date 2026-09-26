@@ -3,11 +3,7 @@
 ---
 
 <!-- Menu Overlay -->
-<div
-    id="mobile-menu"
-    class="fixed inset-0 z-40 hidden"
-    aria-hidden="true"
->
+<div id="mobile-menu" class="fixed inset-0 z-40 hidden" aria-hidden="true">
     <!-- Menu Panel -->
     <nav
         class="fixed right-0 top-0 h-full w-64 bg-cream border-l-4 border-black p-6 transform translate-x-full transition-transform duration-300"
@@ -18,39 +14,49 @@
                 <a
                     href="/"
                     class="text-2xl font-bold hover:text-pink-dark transition-colors"
-                    >Home</a>
+                >
+                    Home
+                </a>
             </li>
             <li>
                 <a
                     href="/about"
                     class="text-2xl font-bold hover:text-pink-dark transition-colors"
-                    >About</a>
+                >
+                    About
+                </a>
             </li>
             <li>
                 <a
                     href="/blog"
                     class="text-2xl font-bold hover:text-purple-dark transition-colors"
-                    >Blog</a>
+                >
+                    Blog
+                </a>
             </li>
             <li>
                 <a
                     href="/talks"
                     class="text-2xl font-bold hover:text-orange-dark transition-colors"
-                    >Talks</a>
+                >
+                    Talks
+                </a>
             </li>
-            <!-- <li>
+            <li>
                 <a
                     href="/projects"
                     class="text-2xl font-bold hover:text-purple transition-colors"
-                    >Projects</a>
-            </li> -->
+                >
+                    Projects
+                </a>
+            </li>
         </ul>
     </nav>
 </div>
 
 <script is:inline>
     // Wait for DOM to be ready
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
         const toggle = document.getElementById("menu-toggle");
         const menu = document.getElementById("mobile-menu");
         const panel = document.getElementById("menu-panel");

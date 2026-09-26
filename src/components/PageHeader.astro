@@ -2,9 +2,7 @@
 const currentPath = Astro.url.pathname;
 ---
 
-<header
-    class="bg-blue font-kanit font-bold text-lg uppercase italic tracking-wider border-b-4 border-black p-2"
->
+<header class="bg-blue font-kanit font-bold text-lg uppercase italic tracking-wider border-b-4 border-black p-2">
     <nav class="flex items-center justify-between" aria-label="Global">
         <!-- Logo/Name -->
         <div class="flex lg:flex-1">
@@ -25,18 +23,15 @@ const currentPath = Astro.url.pathname;
                 <div
                     class="w-6 h-0.5 bg-black transition-all duration-300"
                     id="line1"
-                >
-                </div>
+                ></div>
                 <div
                     class="w-6 h-0.5 bg-black my-1 transition-all duration-300"
                     id="line2"
-                >
-                </div>
+                ></div>
                 <div
                     class="w-6 h-0.5 bg-black transition-all duration-300"
                     id="line3"
-                >
-                </div>
+                ></div>
             </button>
         </div>
 
@@ -78,15 +73,18 @@ const currentPath = Astro.url.pathname;
             >
                 Talks
             </a>
-            <!-- <a
-        href="/projects"
-        class:list={[
-          "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",
-          { "text-blue bg-black": currentPath.startsWith("/projects") }
-        ]}
-      >
-        Projects
-      </a> -->
+            <a
+                href="/projects"
+                class:list={[
+                    "px-4 py-2 rounded-md leading-6 hover:text-blue hover:bg-black transition-colors",
+                    {
+                        "text-blue bg-black":
+                            currentPath.startsWith("/projects"),
+                    },
+                ]}
+            >
+                Projects
+            </a>
         </div>
     </nav>
 </header>

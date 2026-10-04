@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import TechStack from "@/components/TechStack.astro";
 import Pill from "@/components/Pill.astro";
+import ButtonLink from "@/components/ButtonLink.astro";
 import { Image } from "astro:assets";
 import heroMobile from "@/assets/images/Header.png";
 import heroDesktop from "@/assets/images/HeaderDesktop.png";
@@ -63,12 +64,9 @@ import heroDesktop from "@/assets/images/HeaderDesktop.png";
 
         <!-- About CTA -->
         <div class="px-4 pb-2 lg:pb-4">
-            <a
-                href="/about"
-                class="inline-block font-kanit font-bold uppercase italic tracking-wider text-lg bg-lime border-4 border-black rounded-md px-6 py-3 hover:bg-black hover:text-lime transition-colors"
-            >
+            <ButtonLink href="/about" colour="lime" size="lg">
                 More about me →
-            </a>
+            </ButtonLink>
         </div>
 
         <!-- Tech Stack Section -->

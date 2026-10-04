@@ -1,0 +1,16 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<figure class="not-prose my-8">
+  <figcaption class="inline-block mb-2 rounded-md bg-black px-3 py-1 font-mono text-sm text-white">
+    {name}
+  </figcaption>
+  <div class="overflow-hidden rounded-md border-4 border-black text-sm [&_pre]:m-0 [&_pre]:overflow-x-auto [&_pre]:p-4">
+    <slot />
+  </div>
+</figure>

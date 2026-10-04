@@ -6,13 +6,13 @@ order: 1
 status: In progress
 role: Design and build, solo
 timeline: September 2026 – now
-tools: [Claude Design, React, TypeScript, Tailwind, shadcn/ui, DexieJS, PokéAPI]
+tools: [Claude Design, React, TypeScript, Tailwind, shadcn/ui, TanStack Query, DexieJS, dnd-kit, Vitest, PokéAPI]
 githubUrl: https://github.com/Theosaurus-Rex/nuzlocke-tracker
 liveUrl: https://nuzlockeruntracker.netlify.app
-image: ../../assets/images/projects/nuzlocke/crop-hifi-routes-desktop.png
-imageAlt: A screenshot of the Nuzlocke Tracker's routes table, with a row for each route you can encounter a pokemon on
-hero: ../../assets/images/projects/nuzlocke/crop-hifi-party.png
-heroAlt: Block Shadow party cards. Four cards, each with a sprite breaking out of the top edge, type badges, a nickname, moves, held item and ability. One has a yellow OVER CAP chip. The fainted card has a red shadow and a skull, and still shows all its information.
+image: ../../assets/images/projects/nuzlocke/built-hero.png
+imageAlt: The Nuzlocke Tracker's routes table on desktop, with the party screen on a phone overlapping it
+hero: ../../assets/images/projects/nuzlocke/built-hero.png
+heroAlt: The built Nuzlocke Tracker. On desktop, the routes table lists each route with its encounter, sprite, type badges and status. Overlapping it, a phone shows the party screen with Chompy the Croconaw's card, its moves, held item and ability.
 ---
 
 import Figure from '@/components/case-study/Figure.astro';
@@ -20,6 +20,7 @@ import FigureGrid from '@/components/case-study/FigureGrid.astro';
 import Callout from '@/components/case-study/Callout.astro';
 import DeviceCompare from '@/components/case-study/DeviceCompare.astro';
 import ProcessStrip from '@/components/case-study/ProcessStrip.astro';
+import CodeFile from '@/components/case-study/CodeFile.astro';
 
 import moodboard from '@/assets/images/projects/nuzlocke/crop-moodboard.png';
 import lofiWeb from '@/assets/images/projects/nuzlocke/crop-lofi-desktop.png';
@@ -32,17 +33,29 @@ import dirBlock from '@/assets/images/projects/nuzlocke/crop-dir-block.png';
 import dirTerminal from '@/assets/images/projects/nuzlocke/crop-dir-terminal.png';
 import hifiRoutes from '@/assets/images/projects/nuzlocke/crop-hifi-routes-desktop.png';
 import hifiRoutesMobile from '@/assets/images/projects/nuzlocke/crop-hifi-routes-mobile.png';
-import hifiEncounter from '@/assets/images/projects/nuzlocke/crop-hifi-encounter-desktop.png';
-import hifiEncounterMobile from '@/assets/images/projects/nuzlocke/crop-hifi-encounter-mobile.png';
+import builtRoutes from '@/assets/images/projects/nuzlocke/built-routes-desktop.png';
+import builtRoutesMobile from '@/assets/images/projects/nuzlocke/built-routes-mobile.png';
+import builtParty from '@/assets/images/projects/nuzlocke/built-party.png';
+import builtBoxes from '@/assets/images/projects/nuzlocke/built-boxes.png';
+import builtGraveyard from '@/assets/images/projects/nuzlocke/built-graveyard.png';
+import builtGyms from '@/assets/images/projects/nuzlocke/built-gyms.png';
+import builtPhones from '@/assets/images/projects/nuzlocke/built-phones.png';
+import builtSystem from '@/assets/images/projects/nuzlocke/built-system.png';
+import detailBonusShiny from '@/assets/images/projects/nuzlocke/detail-bonus-shiny.png';
+import detailBoxesList from '@/assets/images/projects/nuzlocke/detail-boxes-list.png';
+import detailLogAttempt from '@/assets/images/projects/nuzlocke/detail-log-attempt.png';
+import detailEvolve from '@/assets/images/projects/nuzlocke/detail-evolve.png';
+import detailSettings from '@/assets/images/projects/nuzlocke/detail-settings.png';
 
 <ProcessStrip
   steps={[
-    { label: 'Brief', href: '#the-brief' },
     { label: 'Flows', href: '#flows-before-style' },
     { label: 'Moodboard', href: '#the-moodboard' },
     { label: 'Directions', href: '#four-directions-one-pick' },
     { label: 'Hi-fi', href: '#hi-fi' },
     { label: 'Build', href: '#design-to-code' },
+    { label: 'As built', href: '#as-built' },
+    { label: 'Re-sync', href: '#closing-the-loop' },
   ]}
 />
 
@@ -114,15 +127,7 @@ With the direction picked, I used Claude Design to apply it to the lo-fi screens
   desktopAlt="Hi-fi desktop routes table in Block Shadow. A yellow Routes tab in the sidebar, a row of summary chips, and route rows with sprites, type badges, levels and status chips."
   mobile={hifiRoutesMobile}
   mobileAlt="Hi-fi mobile routes list in Block Shadow, with summary chips at the top, route rows with sprites and chips, and a five-tab bar at the bottom."
-  caption="The routes screen, which you'll use most, on desktop and mobile."
-/>
-
-<DeviceCompare
-  desktop={hifiEncounter}
-  desktopAlt="Hi-fi desktop encounter modal for Sprout Tower. Caught, Missed and Skipped toggles, a species field with an Evolve button, then nickname, gender, levels, nature, ability, held item and moves."
-  mobile={hifiEncounterMobile}
-  mobileAlt="Hi-fi mobile encounter detail as a full-screen view, with the same fields stacked in one column and a save button at the bottom."
-  caption="Logging an encounter: a modal on desktop, a full screen on mobile."
+  caption="The routes screen as first designed, on desktop and mobile."
 />
 
 What changed from lo-fi to hi-fi:
@@ -132,13 +137,38 @@ What changed from lo-fi to hi-fi:
 - **A type column and sprites went into the table**, so you can recognise each mon at a glance.
 - **Rules went from a checkbox list to chips.** You set them once when you start a run, so after that they just need to be visible.
 
-The sprites "poking over" the rows from the moodboard made it in too, but only on the party cards at the top of this page. That's where there's room for them. The fainted card also shows the fix from the lo-fi stage: it keeps all of its info, and shows its state with a red shadow and a skull.
-
+Some things got cut, too. I first wanted each mon's six stats as bars, like the Terminal direction had. They'd have looked great, but people don't min-max stats in a Nuzlocke. They care about what a mon knows, what it's holding and whether it's over the level cap, so that's what the cards show.
 
 ## Design to Code
 
-I'm building to the hi-fi frames, and I wanted the build to match them closely. So I didn't eyeball the palette, borders and shadows off a screenshot. I measured them from the canvas markup and wrote them down as tokens. The frames stay the source of truth, and where the direction sheet and the frames disagree, the frames win because they're the later work.
+### A system you can't skip
 
+While I was still choosing a visual direction, I built the first screens on shadcn's default theme so the two could happen side by side. Once Block Shadow was picked, I logged a separate set of tickets just for the design system and built it before touching any real screens. Then I moved the existing screens over to it one at a time, checking each on desktop and mobile.
+
+I didn't eyeball the palette, borders and shadows off a screenshot. I measured them from the canvas markup and wrote them down as tokens.
+
+<Figure frame={false} width="text" src={builtSystem} alt="Block Shadow component panel. Status chips (party, boxed, missed, fainted, log, skipped), type chips, four buttons with hard offset shadows, and two cards: one for a living mon and one with a red shadow for a mon that died." caption="The system: one chip shape, buttons and cards with hard shadows, and a red shadow for a loss." />
+
+I audited the screens before adding any shared components, and started with only the ones that kept coming up: `Typography`, `Surface` and `ScreenHeader`. A lint rule bans raw headings, paragraphs and one-off text sizes in the app. I'd rather the components hold the styling. It's also much easier to spot a raw tag in review than a class string that has drifted from all the others. The audit also showed spacing wasn't consistent yet, so that's next on the list to tidy up.
+
+<CodeFile name="eslint.config.js">
+
+```js
+// Screens and the app shell can't style text by hand.
+"no-restricted-syntax": [
+  "error",
+  {
+    selector: "JSXOpeningElement[name.name=/^(h[1-6]|p)$/]",
+    message: "Use <Typography> from @/components/typography for headings and paragraphs.",
+  },
+  {
+    selector: "JSXAttribute[name.name='className'] Literal[value=/text-\\[/]",
+    message: "Arbitrary text sizes are not allowed here. Use a <Typography> variant.",
+  },
+],
+```
+
+</CodeFile>
 
 ### Where the design met the browser
 
@@ -148,33 +178,125 @@ I'm building to the hi-fi frames, and I wanted the build to match them closely. 
 - **The number font.** Every number is in Share Tech Mono, which is most of what makes the direction feel the way it does. But wrapping numbers in their own elements broke spacing inside flex containers: `12 CAUGHT` lost its space and `Active (1)` gained two. Neither showed up in tests, so I only found them by looking at the screens in a browser.
 - **The fonts are bundled** and not loaded from Google Fonts. You might be mid-run on a phone with no signal, and the tracker should still look right.
 
-### Decisions I made during the build
+The scaling is a few lines of CSS. The catch is that Tailwind's breakpoints are in rem, so scaling the root would also move the mobile breakpoint from 768px to 960px. Pinning them in px keeps it where it should be:
 
-- **Row actions moved into a menu.** The frames had inline buttons on each row. In the browser that was too cluttered, so the actions went into one "⋯" menu per row, and the whole row became the tap target for logging an encounter or viewing a mon. That cuts the visual noise, and a whole-row tap target is much easier to hit than a small button.
-- **"Gyms" became "Fights".** The screen also has to cover the Elite Four and the Champion, so "Gyms" was too narrow a word.
-- **Picking, not typing.** Species and moves are chosen from a list, not typed in. If you type a name the Pokédex doesn't know, the form won't save until you pick one from the list or undo. And you can't add the same move twice. This is what the first lo-fi draft got wrong, fixed properly in code.
-- **Pickers show every generation.** In a randomised run or a romhack, anything can turn up anywhere. Blocking someone from logging what they actually caught is worse than showing them too many options.
-- **Types match the game you're playing.** Types and move stats come from each Pokémon's data for your game's generation. Clefairy is Normal in HeartGold and Fairy in later games, and showing the modern value would be visibly wrong.
-- **Mistakes can be undone.** In a Nuzlocke, a misclick shouldn't be permanent. You'll be able to reset a wrongly logged encounter, even if that mon has since died, because it fixes a logging mistake and doesn't undo a death in the game. The confirmation spells out exactly what will be deleted, and focus starts on Cancel. This one is in progress.
+<CodeFile name="src/index.css">
+
+```css
+@theme {
+  --breakpoint-md: 768px; /* pinned in px, not rem */
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 125%;
+  }
+}
+```
+
+</CodeFile>
+
+### Reviewing the AI's work
+
+Claude writes a lot of the code, and I review every pull request by running it myself on desktop and mobile. Often a feature works but the UX is wrong, and the fix is to make it simpler:
+
+- **Bonus shinies.** With the shiny clause on, a shiny doesn't use up a route's encounter. Claude's first version put a "Shiny" button on every route. I moved it to one "Add bonus shiny" button at the top of the routes screen, and named it so it's clear what it's for.
+- **Sorting and filtering.** The first version had a separate sort dropdown and a filter menu. Now you sort by clicking a column header, which is the pattern people already know, and the status chips at the top of the list double as filters.
+- **Row actions.** The whole row is the tap target for logging an encounter or opening a mon, with one icon button at the end to reset it. That's far easier to hit on a phone than a row of small buttons.
+
+<Figure width="text" src={detailBonusShiny} alt="The top of the built routes screen. An Add bonus shiny button sits next to Add route, above a search box and the counter chips: 5 caught, 2 missed, 1 fainted and 7 pending." caption="One bonus shiny button for the whole run, and counter chips that double as filters." />
+
+<Figure width="text" src={detailBoxesList} alt="The boxes list view, a table of stored mons with sortable column headers for name, species, level, nature, ability, item and where each was caught." caption="Sorting by column header, not a separate dropdown." />
+
+### Flexible, not "valid"
+
+My usual instinct is to only let in valid data. Here I went the other way, because randomisers and romhacks can put anything anywhere.
+
+- **Pickers show every generation**, and a gym loss can be pinned on any species, not just the leader's team.
+- **I don't check moves against a mon's real moveset.** That would mean knowing which moves each Pokémon can learn in each game, and moves change between generations. It's a lot of data to fetch and keep right, just to block players from logging what really happened.
+- **Picking, not typing.** Species, moves, abilities and held items all come from lists, so you get the flexibility without typos.
+- **Types match the game you're playing.** Clefairy is Normal in HeartGold and Fairy in later games, and showing the modern type would be visibly wrong.
+
+Leaving the data open ended up making the code a lot simpler.
+
+<FigureGrid cols={2}>
+  <Figure width="text" src={detailLogAttempt} alt="The Log attempt dialog for Morty's Fog Badge. Lost is selected, and the losses list has Spark ticked, with the killer set to a level 25 Gengar using Shadow Ball." caption="Logging a gym loss. The killer can be any species, because a randomiser might have put it there." />
+  <Figure width="text" src={detailEvolve} alt="The Edit Pokémon dialog. The species is Ampharos with an Evolve button, a note reads Evolved from Flaaffy with an Undo link, and the ability, held item and moves are all picked from lists." caption="Evolving a mon. Species, ability, held item and moves are all picked from lists, so there's flexibility without typos." />
+</FigureGrid>
+
+### Tested on purpose
+
+Logic and components are covered by automated tests. Every time I add a guarantee, I break the code on purpose to watch its test fail, because a passing test that can't fail proves nothing. In dev, a button loads a sample run with every case I care about, like shinies, deaths and very long names, and I test each change with a mouse and with only the keyboard.
+
+One bug got through anyway: Pokémon with punctuation in their names, like Sirfetch'd, didn't show up properly, and the move search had the same problem. PokéAPI's names don't match how players see or type them. I fixed the whole set with a mapping of special cases, then added them to the tests and the sample run so they can't come back.
+
+<CodeFile name="src/game/data/display-names.ts">
+
+```ts
+// PokéAPI ids can't hold the official spellings, so these are mapped by hand.
+export const speciesDisplayNames = {
+  "nidoran-f": "Nidoran♀",
+  farfetchd: "Farfetch'd",
+  "mr-mime": "Mr. Mime",
+  "type-null": "Type: Null",
+  sirfetchd: "Sirfetch'd",
+  "deoxys-normal": "Deoxys", // a form id, shown by its species name
+  // …
+};
+```
+
+</CodeFile>
 
 ### Designed to keep your run safe
 
 The tracker is local-first. There's no account and no server, and your run stays on your device. The catch is that iOS Safari can clear a site's storage after seven days without a visit. For a permadeath tracker, losing a thirty-route run that way would be the one unforgivable bug, so JSON export and import was built in from the start as the backup.
 
+<Figure width="text" src={detailSettings} alt="The Settings screen. Storage persistence reads persisted, with an Export data button for a JSON backup and an Import section to choose a file." caption="Backups live in Settings: export the whole run as JSON, and import it on any device." />
+
+All storage goes through one adapter, and a lint rule stops anything else touching the database directly. When the app moves to a native mobile build with SQLite, only that one layer has to change.
+
 <Callout colour="blue" title="Accessibility">
   <p>Anything that uses colour also says what it means in words. Status chips and type badges always carry their label, so colourblind users aren't relying on colour alone.</p>
-  <p>The species and move pickers work fully by keyboard. Every field reports its errors to screen readers, and the row menus have names like "Actions for Route 29" so you know which row you're on.</p>
-  <p>I'm testing keyboard use all the time during the build, so that logging a run is quick and easy without a mouse.</p>
+  <p>Every picker works fully by keyboard, and so does drag and drop for the party and boxes. Row buttons have names like "Open Route 29" so screen reader users know which row they're on.</p>
+  <p>Keyboard use matters for everyone here: fast data entry gets players back to the game they're actually playing.</p>
 </Callout>
 
-**Press states and motion** were never drawn, and that was on purpose. I'd rather work them out in a real browser than design something up front that doesn't work in practice. Right now, buttons move down a pixel when pressed, and I'm still working on the rest.
+## As Built
+
+The core screens are built: routes, party, boxes, the graveyard and gyms.
+
+<DeviceCompare
+  desktop={builtRoutes}
+  desktopAlt="The built desktop routes screen. Add bonus shiny and Add route buttons, a search box, counter chips that filter the list, and a table of routes with sprites, type badges, levels, status chips and a reset button on each row. Untouched routes are tinted yellow."
+  mobile={builtRoutesMobile}
+  mobileAlt="The built phone routes screen. A run bar with the run switcher and rule chips, then route cards with sprites, type and status chips, and a six-tab bar at the bottom."
+  caption="Routes, the screen you use most. Counter chips filter the list, and untouched routes stay tinted until they're logged."
+/>
+
+<FigureGrid cols={2}>
+  <Figure width="text" src={builtParty} alt="The built party screen. Four cards with sprites overhanging their top edges, type chips, moves shown with type-coloured dots, held items and abilities. One card has an OVER CAP L25 tab, and two dashed slots read empty, add from box." caption="Party: drag to reorder, with the level cap always in view." />
+  <Figure width="text" src={builtBoxes} alt="The built boxes screen in grid view. Box 1 and Box 2 tabs, a 30-slot grid of sprites, and a tilted card being dragged towards a yellow dashed drop slot." caption="Boxes: 30 slots each, with drag and drop between slots." />
+  <Figure width="text" src={builtGraveyard} alt="The built graveyard screen. A vertical timeline of routes, with red-shadowed death cards beside the routes where each mon died. One card is expanded to show when it was caught and logged, notes and an Edit button." caption="Graveyard: every death on a timeline by route." />
+  <Figure width="text" src={builtGyms} alt="The built gyms and Elite Four screen. Badge sprites, level caps, losses and status for each fight, grouped into Johto and Elite Four. Cleared fights have an Undo button, and the next gym is tinted yellow with a Log chip." caption="Gyms & E4: badges, the next level cap, and who was lost to each leader." />
+</FigureGrid>
+
+<Figure src={builtPhones} alt="Five phone screens side by side on a dark background: routes, party, boxes, graveyard, and gyms and Elite Four. Each has the run bar at the top and the six-tab bar at the bottom." caption="The same app on a phone. Every screen works at 340px, and six tabs replace the sidebar." />
+
+## Closing the Loop
+
+Once most screens were built, I synced the design file back to match the app. Building a feature for real shows edge cases and usability problems that a visual prototype can't, and the code had moved on. Keeping both up to date also stops AI agents drifting from the design, and the sync caught visual bugs too, like text wrapping in odd places.
+
+So it works as a loop. I try things in whichever medium suits the problem, then bring both back in line. The frames still win most of the time, because it's quicker for me to tweak things visually and let that guide the code. The exception is when something built exactly to the design feels bad to use. Then I work it out in code, where I can try it for real in a browser and with a keyboard, and feed the result back into the design.
+
+<FigureGrid cols={2}>
+  <Figure width="text" src={hifiRoutes} alt="The original hi-fi routes table, with a Filter button, a pinned Sprout Tower row and status chips." caption="Before: the routes screen as first designed." />
+  <Figure width="text" src={builtRoutes} alt="The re-synced routes table, with Add bonus shiny, a search box, type badges for dual types and a reset button on each row." caption="After: re-synced from the build, with search, bonus shinies and per-row reset." />
+</FigureGrid>
 
 ## What's Next
 
-It's still being built. The new run screen, the routes list and the encounter modal are mostly done but still being iterated on. After that:
-
-- Finishing the reset-encounter flow, then the party, boxes, graveyard and fights screens.
-- Empty states, which only exist for the empty party slot right now.
-- An installable mobile app via Capacitor, with the storage layer already set up so it can switch to native SQLite.
-- Romhacks, more randomiser support and Soul Link runs. That's why I built this myself in the first place.
+- **Polish.** Empty states, motion and press states, reduced-motion support, and a proper spacing scale.
+- **Trainer sprites** for the gyms and fights.
+- **An installable mobile app** via Capacitor, swapping in native SQLite behind the storage adapter.
+- **Romhacks, more randomiser support and Soul Link runs.** That's why I built this myself in the first place. For Soul Link, each player tracks on their own device for now, which is what most players already do. Later, opt-in syncing could let you log one encounter for both games at once, with local-first staying the default.
 - Maybe, one day, those pixel-art form inputs from the moodboard.

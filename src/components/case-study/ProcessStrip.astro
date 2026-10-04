@@ -15,12 +15,12 @@ const { steps } = Astro.props;
   aria-label="Case study sections"
   class="not-prose col-span-full w-full max-w-6xl mx-auto my-8"
 >
-  <ol class="grid grid-cols-2 gap-2 md:flex md:gap-0 md:items-stretch">
+  <ol class="flex flex-wrap items-center justify-start gap-y-3 md:justify-center">
     {steps.map((step, index) => (
-      <li class="md:flex md:flex-1 md:items-stretch">
+      <li class="flex items-center">
         <a
           href={step.href}
-          class="group flex flex-1 items-center gap-2 border-4 border-black rounded-md bg-white px-3 py-2 font-kanit font-bold uppercase italic tracking-wider transition-colors hover:bg-black hover:text-white focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-black"
+          class="group flex items-center gap-2 whitespace-nowrap border-4 border-black rounded-md bg-white px-3 py-2 font-kanit font-bold uppercase italic tracking-wider transition-colors hover:bg-black hover:text-white focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-black"
         >
           <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-black text-xs text-white group-hover:bg-white group-hover:text-black">
             {String(index + 1).padStart(2, '0')}
@@ -28,7 +28,7 @@ const { steps } = Astro.props;
           <span>{step.label}</span>
         </a>
         {index < steps.length - 1 && (
-          <span aria-hidden="true" class="hidden items-center px-2 text-lg font-bold md:flex">
+          <span aria-hidden="true" class="px-2 text-lg font-bold">
             →
           </span>
         )}

@@ -16,6 +16,6 @@
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.5",
-    "swiper": "^14.2.0"
+    "swiper": "^14.3.0"
   }
 }

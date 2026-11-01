@@ -154,3 +154,102 @@ The hi-fi frames aren't always right. The README for the frames lists where they
 The clearest case is Chaos. The frame below draws a reroll button on every direction of a six-direction Chaos card. But Chaos can't be rerolled, to keep the difficulty honest. That was my decision, and the drawing got it wrong. The README says so plainly: "Decisions already made win over a frame. Do not build these as drawn."
 
 <Figure src={hifiChaosDesktop} alt="Hi-fi desktop generator with the difficulty set to Chaos. The card for Odette Blackwood, a masked ball client, lists six directions, each with a tick box and a reroll button. The reroll buttons are a mistake in the drawing, since Chaos cards can't be rerolled." caption="Chaos as drawn. Those reroll buttons are wrong, and the built app doesn't have them." />
+
+
+## Planning the Build
+
+Before any code, I wrote a spec. It has the scope, the non-goals, a cut line and milestones M0 to M6. Everything after that came from it.
+
+Claude drafted the Linear tickets from the spec. I reordered them, edited them and set the priorities. The tickets are titled in build order, with blocking links, and each one names the wireframe frames it builds to. So when an agent picks up a ticket, it knows what to build and what it should look like.
+
+The agents work under a CLAUDE.md file I wrote. The generator stays pure, share links rebuild forever, layering runs one way and lint enforces it, and desktop and mobile are equals. These are the five hard rules:
+
+<CodeFile name="CLAUDE.md">
+
+```markdown
+1. **`src/domain` is pure.** No I/O, no `Math.random`, no `Date`. Randomness and time come in as
+   inputs. Lint enforces it.
+2. **Data and brief versions are frozen once published.** Any change, including a game update that
+   adds content, goes in a new `vN.ts`. Never edit `v1.ts` after it ships (spec section 4).
+3. **Share links rebuild forever.** A link names its data version. The PRNG (cyrb128 seeding sfc32,
+   with 15 warm-up draws) never changes for a published version.
+4. **Layering runs one way: `features → links → domain → game`.** `no-restricted-imports` in
+   `eslint.config.js` enforces it. Do not lift a rule to get around it. Move the code.
+5. **Desktop and mobile are equals.** Design, build and test both. Playwright runs both projects.
+```
+
+</CodeFile>
+
+The work runs on one ticket, one PR, and I merge. The AI never pushes to main or merges. I asked for PRs under 500 changed lines, with 1,000 as a hard limit. Each one is written in plain English, for someone who isn't an engineer, with a "How to check it" checklist. That checklist is what I work from when I test.
+
+When tickets depended on each other, I ran small stacks of two or three PRs. I tested each one by hand and passed my feedback straight back to the agents.
+
+In all, it came to 47 PRs in a week (16 to 23 October 2026), from an empty scaffold to a site deployed on Netlify from CI.
+
+## Design to Code
+
+Claude Code wrote most of the code, and I merged every PR. These are the places where I stepped in and the AI wasn't going to get there alone.
+
+### Calls I Made While Building
+
+- **Chaos can't be rerolled.** Chaos is the hardest difficulty. If you can reroll away the awkward directions, it stops being hard. I decided it wouldn't allow rerolls, and wrote it into CLAUDE.md as a decision. A Chaos link with a reroll history is treated as invalid.
+- **Say it once.** The generator was dealing two directions of the same kind, so a card said "No cotton" in one row and "No velvet" in the next. I wanted a client to talk the way a person does. PR #41 merges them: "No cotton or velvet", or "Red and blue". A card never has two directions of the same kind. It was an 870-line PR, well over my 500-line aim, and I accepted that, because splitting it would have left `main` half converted.
+- **Proving the accessibility check works.** The tests ran an accessibility scanner (axe), but a check that has never failed proves nothing. So I had a throwaway PR (#39) add an image with no alt text to the daily page. CI went red, which is what I wanted to see. I closed that PR and deleted the branch. The coverage went in with PR #40.
+
+### Tested on Purpose
+
+A green test suite only proves the tests agree with the code. So I asked for each guarantee to be broken on purpose, one at a time, and for the suite to be run each time. If a test stays green, it's a fake. The results are in the repo, and these are five of the ten:
+
+| Guarantee | The break | Test that caught it |
+|---|---|---|
+| No contradictions or repeats | The conflict check is skipped when a direction is drawn | Property: never contradict themselves or repeat a direction |
+| Counts stay in range | The largest count is widened from 8 to 12 | Property: keep counts in range and count only per-piece accessories |
+| Chaos has exactly one opposing pair | The Chaos pair is never placed | Property: give Chaos exactly one opposing pair |
+| A link rebuilds the same rerolls in order | The reroll history is sorted before it is replayed | Property: rebuild from the seed and the history to the same challenge |
+| Old share links keep their text | One character changed in a client line | Pinned challenges: still rebuilds every pinned challenge exactly |
+
+The property tests run thousands of random challenges. A pinned set of 110 challenges guards old share links, so a change that would break a link someone already shared turns the suite red.
+
+One probe first stayed green. The count test checked counts against the code's own range constant, so when I widened the constant, the check widened with it. It could never fail. The test now uses the literal numbers from the design, and the same probe turns it red.
+
+Share links last for a simple reason. A link holds the seed and the reroll history. The generator is seeded and pure, and each data version is frozen once published. So the same link rebuilds the same card, however the app changes after that.
+
+## Giving Clients a Voice
+
+This was the trickiest place to step in. Every seed makes a different card, so there's no fixed page of text to proofread. The AI wrote the first lines. I had to find a way to review text that doesn't hold still.
+
+**Voices.** Each client gets one of six personalities from the seed: Deadpan, Gushing, Brisk, Grand, Anxious and Theatrical. Each has its own line for every kind of direction. The tables below show the same direction in each voice. I read every line before merging PR #15 (the first three voices) and PR #19 (the other three).
+
+| Direction | Deadpan | Gushing | Brisk |
+|---|---|---|---|
+| Gothic | "Gothic. Think funeral, but fun." | "Oh, something gothic, darling! Dark and dreamy." | "Gothic. Nothing flimsy." |
+| No wool | "Not wool. It knows what it did." | "I'm afraid wool and I don't get along, dear." | "Skip the wool. Thanks." |
+| At least 5 bows | "Bows everywhere. At the very least, five." | "Five bows at least, dear! I can't have too many." | "At least five bows." |
+
+| Direction | Grand | Anxious | Theatrical |
+|---|---|---|---|
+| Gothic | "Gothic. My family has always dressed for a good haunting." | "Something gothic, maybe? Sorry, is that too dark?" | "Gothic, darling! A tragedy in three acts, with ruffles!" |
+| No wool | "No wool, please. It is not done." | "Please, no wool. I'm sure it's lovely, I just can't." | "No wool! The audience would riot!" |
+| At least 3 colours | "At least three colours, if you please. I do not do plain." | "Maybe three colours, or more? I'm so sorry to ask." | "At least three colours! Paint the whole stage, darling!" |
+
+**What read wrong.** The lines were fine one at a time. The trouble showed up when they were slotted into briefs. I found things like these:
+
+- "stroll along a seaside holiday"
+- "walk into a tour"
+- "haunting a haunted house party"
+- "braving a brave picnic"
+- "I shall require cute"
+
+Brisk was the other problem. Its short lines just repeated the direction back, so "No trim." got the client line "No trim." PR #43 reworded all 14 Brisk lines, so each now adds something, such as "No trim. Too fussy."
+
+**The fix that scales.** I could have kept fixing these one card at a time, but there would always be another. So in PR #44 I asked for a sample of 260 generated cards, covering every difficulty, Burlap on and off, every theme and all six voices. I could read them in one sitting and mark what looked wrong. A second section fills every template with every occasion, so a bad pairing stands out.
+
+Then I turned each kind of mistake into a test, so the whole kind can't come back:
+
+- every occasion starts with an article
+- every worry starts with an -ing word
+- no brief repeats a word
+- no client line repeats its short line
+- no text contains a straight apostrophe or quote
+
+I didn't only catch the AI's mistakes. I built a way to catch every mistake of that kind. Each of those tests was checked by breaking it first.

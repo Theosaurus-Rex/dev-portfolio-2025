@@ -67,7 +67,6 @@ Tailor-Made makes one up. You get a client, a short brief and a few directions t
 
 I'm building it for the Dressmaker community first. It's also a deliberate test: can I run a whole project with AI, from planning to a live site, and still own every decision? I planned this case study on day one and documented the process as it happened. Tickets with something worth showing carried a `case-study` label, so the artefacts were there when I needed them.
 
-
 ## Research
 
 Dressmaker was a month old when I started, so there was no API and no data dump. I took my data from a fan wiki, dressmakerwiki.site, which was showing build 410 data. I checked its tag counts against a count I made myself, and read other guide sites to see that they described the same kind of card.
@@ -84,9 +83,9 @@ I knew the game, and I knew those numbers don't show up on an off-rack dress. Yo
 
 I rewrote the scope before any generator code existed. The new rule is that **every direction must be something you can judge by eye**. That means a style, a fabric, a colour to use or avoid, an accessory to add or avoid, or a small count you can tally. Trim lengths went too, since nobody measures those on screen.
 
-The examples below are invented, not taken from the game:
+The examples below are invented, not taken from the game. The right column shows the kind of direction that replaced hidden numbers. It isn't a one-to-one translation of each row.
 
-| Before | After |
+| A hidden number | The kind of direction that replaced it |
 |---|---|
 | Keep the cost under a set budget | No Silk |
 | At least 40% velvet | Velvet |
@@ -106,7 +105,7 @@ The grey boxes and sketch type are on purpose. These frames only settle layout a
 <FigureGrid phones>
   <Figure width="text" src={lofiCardMobile} alt="Lo-fi mobile client card. A summary row says Medium, Burlap off, with a New client button. Below it a card shows a client with initials, a brief and four directions, each with a tick box and a reroll button, then Copy link and Copy as text buttons." caption="The client card, with a reroll on every direction." />
   <Figure width="text" src={lofiBurlapMobile} alt="Lo-fi mobile client card with Burlap only on. The first direction row, Burlap only, is marked as a modifier and has no reroll button. Three other directions below have tick boxes and reroll buttons." caption="Burlap only on. That first row is fixed." />
-  <Figure width="text" src={lofiControlsMobile} alt="Lo-fi mobile screen with the controls open above the card. The New client box has the difficulty selector, a Burlap only tick box with help text, and Generate new client and Keep current client buttons." caption="The controls open on mobile." />
+  <Figure width="text" src={lofiControlsMobile} alt="Lo-fi mobile screen with the controls open above the card. The New client box has the difficulty selector, a Burlap only tick box with help text, and Generate new client and Keep current client buttons. Below the controls sits a client card for Marguerite Holloway, with two of four directions ticked." caption="The controls open on mobile." />
 </FigureGrid>
 
 Desktop and mobile get the same attention. On a phone the controls fold away into a summary row, so the card stays the first thing you see.
@@ -128,7 +127,7 @@ The canvas calls it Rosewood Label. In the repo it became Rosewood Atelier.
 
 ## Hi-Fi
 
-I redrew all 26 frames in Rosewood Atelier. The rules of the look are short. It's dark only, with no shadows, and one dusty rose accent carries every button, tick and link.
+I had Claude Design redraw all 26 frames in Rosewood Atelier, then I refined them. The rules of the look are short. It's dark only, with no shadows, and one dusty rose accent carries every button, tick and link.
 
 I didn't eyeball the values from a screenshot. I read the palette, type sizes and component shapes from the canvas markup and wrote them into a design doc, so Claude Code builds to measured tokens and not a guess.
 
@@ -159,15 +158,15 @@ The agents work under a CLAUDE.md file I set up and kept current. The generator 
 <CodeFile name="CLAUDE.md">
 
 ```markdown
-1. **`src/domain` is pure.** No I/O, no `Math.random`, no `Date`. Randomness and time come in as
+1. `src/domain` is pure. No I/O, no `Math.random`, no `Date`. Randomness and time come in as
    inputs. Lint enforces it.
-2. **Data and brief versions are frozen once published.** Any change, including a game update that
+2. Data and brief versions are frozen once published. Any change, including a game update that
    adds content, goes in a new `vN.ts`. Never edit `v1.ts` after it ships (spec section 4).
-3. **Share links rebuild forever.** A link names its data version. The PRNG (cyrb128 seeding sfc32,
+3. Share links rebuild forever. A link names its data version. The PRNG (cyrb128 seeding sfc32,
    with 15 warm-up draws) never changes for a published version.
-4. **Layering runs one way: `features → links → domain → game`.** `no-restricted-imports` in
+4. Layering runs one way: `features → links → domain → game`. `no-restricted-imports` in
    `eslint.config.js` enforces it. Do not lift a rule to get around it. Move the code.
-5. **Desktop and mobile are equals.** Design, build and test both. Playwright runs both projects.
+5. Desktop and mobile are equals. Design, build and test both. Playwright runs both projects.
 ```
 
 </CodeFile>
@@ -244,8 +243,7 @@ Then I turned each kind of mistake into a test, so the whole kind can't come bac
 - no client line repeats its short line
 - no text contains a straight apostrophe or quote
 
-I didn't only catch the AI's mistakes. I built a way to catch every mistake of that kind. Each of those tests was checked by breaking it first.
-
+I didn't only catch the AI's mistakes. I built a way to catch every mistake of that kind.
 
 ## As Built
 
@@ -264,10 +262,10 @@ The generator, the client card, rerolls, share links, the daily challenge and th
   desktopAlt="The built client card on desktop for Freya Lindqvist, a mayor's charity ball client. A fixed Burlap only row marked Modifier sits above four directions. No trim is ticked and struck through, and each of the four has a reroll button."
   mobile={builtClientCardMobile}
   mobileAlt="The same client card on a phone, with the same Burlap only row at the top and four directions below, one ticked and struck through, each with a reroll button."
-  caption="A card with Burlap only on and one direction ticked. The Burlap row is fixed, so it has no reroll."
+  caption="A card with the Burlap only modifier, shown as a fixed row with no reroll. One other direction is ticked."
 />
 
-<Figure src={builtRerollDesktop} alt="The built generator on desktop after a reroll. The client card for Greta Lockwood shows three directions. The middle one, At least 3 colours, has a dashed outline and a New direction label. A line under the list says direction 2 was swapped and its tick was cleared." caption="A reroll swaps one direction, clears its tick and leaves the rest alone. The new one is marked until you move on." />
+<Figure src={builtRerollDesktop} alt="The built generator on desktop after a reroll. The client card for Greta Lockwood shows three directions. The middle one, At least 3 colours, has a dashed outline and a New direction label. A line under the list says direction 2 was swapped and its tick was cleared." caption="A reroll swaps one direction, clears its tick and leaves the rest alone. The new row is highlighted with a short note saying what changed." />
 
 <DeviceCompare
   desktop={builtSharedCardDesktop}
@@ -293,6 +291,6 @@ The generator, the client card, rerolls, share links, the daily challenge and th
 
 ## What's Next
 
-- **Tuning.** Play about five challenges per difficulty in the game itself, then retune Chaos.
-- **Launch.** Link preview images, and a post to the Dressmaker community.
-- **Later.** History and daily streaks kept in the browser, and a daily gallery of player screenshots.
+- **Tuning.** I'll play about five challenges per difficulty in the game, then retune Chaos.
+- **Launch.** I'll add link preview images and post to the Dressmaker community.
+- **Later.** I'd like to add history and daily streaks kept in the browser, and a daily gallery of player screenshots.

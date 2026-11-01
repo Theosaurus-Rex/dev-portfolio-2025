@@ -1,0 +1,75 @@
+---
+name: Tailor-Made
+description: A challenge generator for off-rack dresses in Dressmaker that I planned, designed and built with AI, from research and scoping through to a live site. It's still being built.
+caseStudy: true
+order: 2
+status: In progress
+role: Design and build, solo
+timeline: October 2026 – now
+tools: [Claude Design, Claude Code, Linear, React, TypeScript, Tailwind, shadcn/ui, Vitest, fast-check, Playwright, Netlify]
+githubUrl: https://github.com/Theosaurus-Rex/tailor-made
+liveUrl: https://tailor-made-dressmaker.netlify.app
+image: ../../assets/images/projects/tailor-made/built-generator-desktop.png
+imageAlt: Tailor-Made's generator on desktop. A New client panel with a difficulty selector sits beside a client card with a name, an occasion, a short brief and four directions to tick off.
+hero: ../../assets/images/projects/tailor-made/built-generator-desktop.png
+heroAlt: The built Tailor-Made generator on desktop. On the left, a difficulty selector set to Medium, a Burlap only tick box and a Generate new client button. On the right, a client card for Wilhelmina Applegarth with a graduation ceremony brief and four directions, each with a tick box and a line in her voice.
+---
+
+import Figure from '@/components/case-study/Figure.astro';
+import FigureGrid from '@/components/case-study/FigureGrid.astro';
+import Callout from '@/components/case-study/Callout.astro';
+import DeviceCompare from '@/components/case-study/DeviceCompare.astro';
+import ProcessStrip from '@/components/case-study/ProcessStrip.astro';
+import CodeFile from '@/components/case-study/CodeFile.astro';
+
+import dirFittingRoom from '@/assets/images/projects/tailor-made/dir-fitting-room.png';
+import dirMaison from '@/assets/images/projects/tailor-made/dir-maison.png';
+import dirPatternPaper from '@/assets/images/projects/tailor-made/dir-pattern-paper.png';
+import dirRosewood from '@/assets/images/projects/tailor-made/dir-rosewood.png';
+import lofiGeneratorDesktop from '@/assets/images/projects/tailor-made/lofi-1a-desktop.png';
+import lofiCardDesktop from '@/assets/images/projects/tailor-made/lofi-1e-desktop.png';
+import lofiCardMobile from '@/assets/images/projects/tailor-made/lofi-1e-mobile.png';
+import lofiChaosMobile from '@/assets/images/projects/tailor-made/lofi-2a-long-mobile.png';
+import lofiBurlapMobile from '@/assets/images/projects/tailor-made/lofi-2c-mobile.png';
+import lofiControlsMobile from '@/assets/images/projects/tailor-made/lofi-1h-mobile.png';
+import hifiCardDesktop from '@/assets/images/projects/tailor-made/hifi-1e-desktop.png';
+import hifiCardMobile from '@/assets/images/projects/tailor-made/hifi-1e-mobile.png';
+import hifiChaosDesktop from '@/assets/images/projects/tailor-made/hifi-2a-long-desktop.png';
+import hifiBurlapDesktop from '@/assets/images/projects/tailor-made/hifi-2c-desktop.png';
+import hifiDailyDesktop from '@/assets/images/projects/tailor-made/hifi-5a-desktop.png';
+import hifiDailyMobile from '@/assets/images/projects/tailor-made/hifi-5a-mobile.png';
+import hifiBadLinkMobile from '@/assets/images/projects/tailor-made/hifi-4a-mobile.png';
+import builtGeneratorDesktop from '@/assets/images/projects/tailor-made/built-generator-desktop.png';
+import builtGeneratorMobile from '@/assets/images/projects/tailor-made/built-generator-mobile.png';
+import builtClientCardDesktop from '@/assets/images/projects/tailor-made/built-client-card-some-1440.png';
+import builtClientCardMobile from '@/assets/images/projects/tailor-made/built-client-card-some-390.png';
+import builtRerollDesktop from '@/assets/images/projects/tailor-made/built-reroll-1440.png';
+import builtSharedCardDesktop from '@/assets/images/projects/tailor-made/built-shared-card-1440.png';
+import builtSharedCardMobile from '@/assets/images/projects/tailor-made/built-shared-card-390.png';
+import builtBadLinkMobile from '@/assets/images/projects/tailor-made/built-shared-bad-link-390.png';
+import builtDailyMobile from '@/assets/images/projects/tailor-made/built-daily-390.png';
+import builtAboutDesktop from '@/assets/images/projects/tailor-made/built-about-page-desktop.png';
+import builtAboutMobile from '@/assets/images/projects/tailor-made/built-about-page-mobile.png';
+import builtCopyFailedMobile from '@/assets/images/projects/tailor-made/built-copy-failed-390.png';
+
+<ProcessStrip
+  steps={[
+    { label: 'Research', href: '#research' },
+    { label: 'Scope', href: '#dropping-the-numbers' },
+    { label: 'Flows', href: '#flows-before-style' },
+    { label: 'Directions', href: '#four-directions-one-pick' },
+    { label: 'Hi-fi', href: '#hi-fi' },
+    { label: 'Plan', href: '#planning-the-build' },
+    { label: 'Build', href: '#design-to-code' },
+    { label: 'Voices', href: '#giving-clients-a-voice' },
+    { label: 'As built', href: '#as-built' },
+  ]}
+/>
+
+## The Brief
+
+Dressmaker is a game from Cozy Lives and Free Lives, released in September 2026. You run a dress shop. Story clients hand you a card of requirements, and you design a dress to match. The off-rack dresses, the ones you make for the shop floor, have no card at all. You're on your own.
+
+Tailor-Made makes one up. You get a client, a short brief and a few directions to design towards. You can share a challenge as a link, or play the daily one that everyone gets. There's no backend and no account.
+
+I'm building it for the Dressmaker community first. It's also a deliberate test: can I run a whole project with AI, from planning to a live site, and still own every decision? I planned this case study on day one and documented the process as it happened. Tickets with something worth showing carried a `case-study` label, so the artefacts were there when I needed them.

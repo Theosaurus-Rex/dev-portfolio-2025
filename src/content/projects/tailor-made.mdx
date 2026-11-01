@@ -73,3 +73,84 @@ Dressmaker is a game from Cozy Lives and Free Lives, released in September 2026.
 Tailor-Made makes one up. You get a client, a short brief and a few directions to design towards. You can share a challenge as a link, or play the daily one that everyone gets. There's no backend and no account.
 
 I'm building it for the Dressmaker community first. It's also a deliberate test: can I run a whole project with AI, from planning to a live site, and still own every decision? I planned this case study on day one and documented the process as it happened. Tickets with something worth showing carried a `case-study` label, so the artefacts were there when I needed them.
+
+
+## Research
+
+Dressmaker was a month old when I started, so there was no API and no data dump. I took my data from a fan wiki, dressmakerwiki.site, which was showing build 410 data. I checked its tag counts against a count I made myself, and read other guide sites to see that they described the same kind of card.
+
+I catalogued all 77 story commission cards in a private note. I wasn't copying them. I wanted their patterns. A card can set a minimum, a ceiling, an avoid, an "only" list, a share or a count. Those patterns became the grammar for Tailor-Made's directions. The card text stays in that private note and nowhere in the app or on this page.
+
+The game gets patched often, so I checked build 443, the latest one with any evidence, before freezing the first data set. It added new fabrics and accessories, but no new fabric type, accessory type, style tag or colour. So I kept the data at the level of fabric types. There are 8 of them, against hundreds of individual fabrics. A generator that says "Lace" or "No Silk" doesn't go stale every time a patch adds a print.
+
+## Dropping the Numbers
+
+The first spec the AI wrote copied the commission cards. A challenge had tag scores, a Quality target, a budget cap and percentages like "at least 40% velvet".
+
+I knew the game, and I knew those numbers don't show up on an off-rack dress. You can't see a tag score or a running cost. A player could never check a challenge like that. It would only work if they trusted the app.
+
+I rewrote the scope before any generator code existed. The new rule is that **every direction must be something you can judge by eye**. That means a style, a fabric, a colour to use or avoid, an accessory to add or avoid, or a small count you can tally. Trim lengths went too, since nobody measures those on screen.
+
+The examples below are invented, not taken from the game:
+
+| Before | After |
+|---|---|
+| Keep the cost under a set budget | No Silk |
+| At least 40% velvet | Velvet |
+| A minimum score in the Gothic tag | Gothic |
+| A set length of trim | At least 5 bows |
+
+The spec also had a cut line, so scope couldn't quietly grow. If briefs and difficulty together turned out to be too much, I'd keep the briefs and drop the difficulty dial. I never needed it, but it was written down before I started.
+
+## Flows Before Style
+
+I drew 26 screens and states, each at desktop (1440px) and mobile (390px), as lo-fi frames in Claude Design. That covers the empty generator, every difficulty, a card with some directions ticked, rerolls, the share link, a bad link, the daily page and the About page.
+
+The grey boxes and sketch type are on purpose. These frames only settle layout and flow. I wasn't choosing a look yet.
+
+<Figure src={lofiGeneratorDesktop} alt="Lo-fi wireframe of the desktop generator before any client exists. A New client box on the left has a four-part difficulty selector set to Medium, a Burlap only tick box and a black Generate client button. A dashed box on the right says No client yet." caption="Lo-fi desktop: the generator before anyone has been generated." />
+
+<FigureGrid phones>
+  <Figure width="text" src={lofiCardMobile} alt="Lo-fi mobile client card. A summary row says Medium, Burlap off, with a New client button. Below it a card shows a client with initials, a brief and four directions, each with a tick box and a reroll button, then Copy link and Copy as text buttons." caption="The client card, with a reroll on every direction." />
+  <Figure width="text" src={lofiBurlapMobile} alt="Lo-fi mobile client card with Burlap only on. The first direction row, Burlap only, is marked as a modifier and has no reroll button. Three other directions below have tick boxes and reroll buttons." caption="Burlap only on. That first row is fixed." />
+  <Figure width="text" src={lofiControlsMobile} alt="Lo-fi mobile screen with the controls open above the card. The New client box has the difficulty selector, a Burlap only tick box with help text, and Generate new client and Keep current client buttons." caption="The controls open on mobile." />
+</FigureGrid>
+
+Desktop and mobile get the same attention. On a phone the controls fold away into a summary row, so the card stays the first thing you see.
+
+## Four Directions, One Pick
+
+Nuzlocke had a moodboard. This one didn't need it. I already had the palette and the atelier feel in my head: warm, dark and a bit old-fashioned, like a sewing room. So I asked Claude Design for four directions. Each one shows a wordmark, a palette, type and the same client card.
+
+<FigureGrid cols={2}>
+  <Figure width="text" src={dirFittingRoom} alt="The Fitting Room direction sheet. A flourished italic Tailor-Made wordmark with a swallowtail tag, a palette of linen, blush, garnet, velvet and night, and the sample client card on soft plum with round reroll buttons." caption="Fitting Room. Soft plum and a flourished italic serif (Cormorant Garamond and Jost)." />
+  <Figure width="text" src={dirMaison} alt="The Maison direction sheet. A wide-spaced capital Tailor-Made wordmark, a brass tape measure strip over a palette of ivory, brass, oxblood, ink and black, and the sample card on near-black with square Reroll buttons." caption="Maison. A fashion-house serif in capitals, oxblood and brass (Bodoni Moda and Figtree)." />
+  <Figure width="text" src={dirPatternPaper} alt="The Pattern Paper direction sheet. A heavy serif wordmark with a dashed underline, a palette of tissue, chalk rose, mulberry, cutting mat and soot, and the sample card on grid paper with dashed stitch lines and monospace text." caption="Pattern Paper. Grid paper, stitch lines and mono pattern markings (Gloock and IBM Plex Mono)." />
+  <Figure width="text" src={dirRosewood} alt="The Rosewood Label direction sheet. A TM monogram in an oval above the wordmark, a palette of champagne, blush, wine, rosewood and cellar, and the sample card on rosewood with a double-stitched border and a centred name." caption="Rosewood Label. Rosewood and champagne, with a sewn-in garment label card (Instrument Serif and Instrument Sans)." />
+</FigureGrid>
+
+I picked Rosewood Label. It felt warm and cosy, the way the game does. The other three were far too high-fashion for the people who play it. I wanted less Chanel, more local independent boutique. That was an audience call, and it was mine. The sheets were all good, but only one of them looked like it belonged to Dressmaker players.
+
+The canvas calls it Rosewood Label. In the repo it became Rosewood Atelier.
+
+## Hi-Fi
+
+I redrew all 26 frames in Rosewood Atelier. The rules of the look are short. It's dark only, with no shadows, and one dusty rose accent carries every button, tick and link.
+
+I didn't eyeball the values from a screenshot. I read the palette, type sizes and component shapes from the canvas markup and wrote them into a design doc, so Claude Code builds to measured tokens and not a guess.
+
+<DeviceCompare
+  desktop={hifiCardDesktop}
+  desktopAlt="Hi-fi desktop generator in Rosewood Atelier. A New client panel on the left has a difficulty selector set to Medium, a Burlap only tick box and a dusty rose Generate client button. On the right a client card for Marguerite Holloway has a monogram, a brief and four directions with tick boxes and reroll buttons, with Copy link and Copy as text below."
+  mobile={hifiCardMobile}
+  mobileAlt="Hi-fi mobile client card in Rosewood Atelier. A summary row says Medium, Burlap off, with a Tap to change link and a New client button. Below it the card shows the same client, centred, with four directions."
+  caption="The client card in hi-fi, on desktop and mobile. Compare it with the lo-fi frames above."
+/>
+
+### Decisions win over frames
+
+The hi-fi frames aren't always right. The README for the frames lists where they're wrong, so Claude Code builds to my decisions and not to the drawings.
+
+The clearest case is Chaos. The frame below draws a reroll button on every direction of a six-direction Chaos card. But Chaos can't be rerolled, to keep the difficulty honest. That was my decision, and the drawing got it wrong. The README says so plainly: "Decisions already made win over a frame. Do not build these as drawn."
+
+<Figure src={hifiChaosDesktop} alt="Hi-fi desktop generator with the difficulty set to Chaos. The card for Odette Blackwood, a masked ball client, lists six directions, each with a tick box and a reroll button. The reroll buttons are a mistake in the drawing, since Chaos cards can't be rerolled." caption="Chaos as drawn. Those reroll buttons are wrong, and the built app doesn't have them." />

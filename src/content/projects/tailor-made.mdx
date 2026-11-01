@@ -155,14 +155,13 @@ The clearest case is Chaos. The frame below draws a reroll button on every direc
 
 <Figure src={hifiChaosDesktop} alt="Hi-fi desktop generator with the difficulty set to Chaos. The card for Odette Blackwood, a masked ball client, lists six directions, each with a tick box and a reroll button. The reroll buttons are a mistake in the drawing, since Chaos cards can't be rerolled." caption="Chaos as drawn. Those reroll buttons are wrong, and the built app doesn't have them." />
 
-
 ## Planning the Build
 
-Before any code, I wrote a spec. It has the scope, the non-goals, a cut line and milestones M0 to M6. Everything after that came from it.
+Before any code, Claude and I wrote a spec, and I rewrote its scope. It has the scope, the non-goals, a cut line and milestones M0 to M6. Everything after that came from it.
 
 Claude drafted the Linear tickets from the spec. I reordered them, edited them and set the priorities. The tickets are titled in build order, with blocking links, and each one names the wireframe frames it builds to. So when an agent picks up a ticket, it knows what to build and what it should look like.
 
-The agents work under a CLAUDE.md file I wrote. The generator stays pure, share links rebuild forever, layering runs one way and lint enforces it, and desktop and mobile are equals. These are the five hard rules:
+The agents work under a CLAUDE.md file I set up and kept current. The generator stays pure, share links rebuild forever, layering runs one way and lint enforces it, and desktop and mobile are equals. These are the five hard rules:
 
 <CodeFile name="CLAUDE.md">
 
@@ -232,7 +231,7 @@ This was the trickiest place to step in. Every seed makes a different card, so t
 | No wool | "No wool, please. It is not done." | "Please, no wool. I'm sure it's lovely, I just can't." | "No wool! The audience would riot!" |
 | At least 3 colours | "At least three colours, if you please. I do not do plain." | "Maybe three colours, or more? I'm so sorry to ask." | "At least three colours! Paint the whole stage, darling!" |
 
-**What read wrong.** The lines were fine one at a time. The trouble showed up when they were slotted into briefs. I found things like these:
+**What read wrong.** The lines were fine one at a time. The trouble showed up when they were slotted into briefs. My review and the AI's first pass turned up things like these:
 
 - "stroll along a seaside holiday"
 - "walk into a tour"
@@ -240,7 +239,7 @@ This was the trickiest place to step in. Every seed makes a different card, so t
 - "braving a brave picnic"
 - "I shall require cute"
 
-Brisk was the other problem. Its short lines just repeated the direction back, so "No trim." got the client line "No trim." PR #43 reworded all 14 Brisk lines, so each now adds something, such as "No trim. Too fussy."
+Brisk was the other problem. Its short lines just repeated the direction back, so "No sequins." got the client line "No sequins." PR #43 reworded all 14 Brisk lines, so each now adds something, such as "No sequins. Too shiny."
 
 **The fix that scales.** I could have kept fixing these one card at a time, but there would always be another. So in PR #44 I asked for a sample of 260 generated cards, covering every difficulty, Burlap on and off, every theme and all six voices. I could read them in one sitting and mark what looked wrong. A second section fills every template with every occasion, so a bad pairing stands out.
 

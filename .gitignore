@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# planning docs
+docs/superpowers/
+.superpowers/

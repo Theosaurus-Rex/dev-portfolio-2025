@@ -17,7 +17,6 @@ heroAlt: The built Tailor-Made generator on desktop. On the left, a difficulty s
 
 import Figure from '@/components/case-study/Figure.astro';
 import FigureGrid from '@/components/case-study/FigureGrid.astro';
-import Callout from '@/components/case-study/Callout.astro';
 import DeviceCompare from '@/components/case-study/DeviceCompare.astro';
 import ProcessStrip from '@/components/case-study/ProcessStrip.astro';
 import CodeFile from '@/components/case-study/CodeFile.astro';
@@ -27,18 +26,12 @@ import dirMaison from '@/assets/images/projects/tailor-made/dir-maison.png';
 import dirPatternPaper from '@/assets/images/projects/tailor-made/dir-pattern-paper.png';
 import dirRosewood from '@/assets/images/projects/tailor-made/dir-rosewood.png';
 import lofiGeneratorDesktop from '@/assets/images/projects/tailor-made/lofi-1a-desktop.png';
-import lofiCardDesktop from '@/assets/images/projects/tailor-made/lofi-1e-desktop.png';
 import lofiCardMobile from '@/assets/images/projects/tailor-made/lofi-1e-mobile.png';
-import lofiChaosMobile from '@/assets/images/projects/tailor-made/lofi-2a-long-mobile.png';
 import lofiBurlapMobile from '@/assets/images/projects/tailor-made/lofi-2c-mobile.png';
 import lofiControlsMobile from '@/assets/images/projects/tailor-made/lofi-1h-mobile.png';
 import hifiCardDesktop from '@/assets/images/projects/tailor-made/hifi-1e-desktop.png';
 import hifiCardMobile from '@/assets/images/projects/tailor-made/hifi-1e-mobile.png';
 import hifiChaosDesktop from '@/assets/images/projects/tailor-made/hifi-2a-long-desktop.png';
-import hifiBurlapDesktop from '@/assets/images/projects/tailor-made/hifi-2c-desktop.png';
-import hifiDailyDesktop from '@/assets/images/projects/tailor-made/hifi-5a-desktop.png';
-import hifiDailyMobile from '@/assets/images/projects/tailor-made/hifi-5a-mobile.png';
-import hifiBadLinkMobile from '@/assets/images/projects/tailor-made/hifi-4a-mobile.png';
 import builtGeneratorDesktop from '@/assets/images/projects/tailor-made/built-generator-desktop.png';
 import builtGeneratorMobile from '@/assets/images/projects/tailor-made/built-generator-mobile.png';
 import builtClientCardDesktop from '@/assets/images/projects/tailor-made/built-client-card-some-1440.png';
@@ -252,3 +245,54 @@ Then I turned each kind of mistake into a test, so the whole kind can't come bac
 - no text contains a straight apostrophe or quote
 
 I didn't only catch the AI's mistakes. I built a way to catch every mistake of that kind. Each of those tests was checked by breaking it first.
+
+
+## As Built
+
+The generator, the client card, rerolls, share links, the daily challenge and the About page are built and live. These are real captures from the app, on desktop and on a phone.
+
+<DeviceCompare
+  desktop={builtGeneratorDesktop}
+  desktopAlt="The built generator on desktop. A New client panel has a difficulty selector set to Medium, a Burlap only tick box and a Generate new client button. Beside it is a client card for Wilhelmina Applegarth with a brief and four directions, each with a tick box and a line in her voice."
+  mobile={builtGeneratorMobile}
+  mobileAlt="The built generator on a phone. A summary row says Medium, Burlap off, with a Tap to change link and a New client button. Below it a card for Ines Penhallow shows a brief and three directions, with Jewels, At least 3 bows and No flowers each in her anxious voice."
+  caption="The generator. On a phone the controls fold into one summary row, so the client comes first."
+/>
+
+<DeviceCompare
+  desktop={builtClientCardDesktop}
+  desktopAlt="The built client card on desktop for Freya Lindqvist, a mayor's charity ball client. A fixed Burlap only row marked Modifier sits above four directions. No trim is ticked and struck through, and each of the four has a reroll button."
+  mobile={builtClientCardMobile}
+  mobileAlt="The same client card on a phone, with the same Burlap only row at the top and four directions below, one ticked and struck through, each with a reroll button."
+  caption="A card with Burlap only on and one direction ticked. The Burlap row is fixed, so it has no reroll."
+/>
+
+<Figure src={builtRerollDesktop} alt="The built generator on desktop after a reroll. The client card for Greta Lockwood shows three directions. The middle one, At least 3 colours, has a dashed outline and a New direction label. A line under the list says direction 2 was swapped and its tick was cleared." caption="A reroll swaps one direction, clears its tick and leaves the rest alone. The new one is marked until you move on." />
+
+<DeviceCompare
+  desktop={builtSharedCardDesktop}
+  desktopAlt="The built shared challenge page on desktop. A heading says Someone sent you a client, above a card for Freya Lindqvist with four directions and no ticks. Below it a panel asks Fancy a client of your own? with a Make your own button."
+  mobile={builtSharedCardMobile}
+  mobileAlt="The shared challenge page on a phone, with the same heading, card and Make your own panel stacked in one column."
+  caption="Open a share link and you get the same client, with a way to make your own."
+/>
+
+<FigureGrid phones>
+  <Figure width="text" src={builtDailyMobile} alt="The built daily page on a phone. The date reads Friday 16 October 2026, with a Hard label and the line The same client for everyone today. A card for Cecily Oakhurst has four directions, then a link to today's client and a Next client in countdown." caption="The daily client, with a countdown to the next one." />
+  <Figure width="text" src={builtBadLinkMobile} alt="The built bad link page on a phone. A monogram sits above the heading We couldn't read this link. Text explains the link may have been cut off or made with an older version, with a Make a new one button." caption="A bad link gets a plain explanation and a way out." />
+  <Figure width="text" src={builtCopyFailedMobile} alt="The built generator on a phone after the browser blocked copying. The Copy link button now reads Couldn't copy. A message says the browser blocked the clipboard, and the link is shown selected below so it can be copied by hand." caption="If the browser blocks copying, the link is shown selected so you can copy it yourself." />
+</FigureGrid>
+
+<DeviceCompare
+  desktop={builtAboutDesktop}
+  desktopAlt="The built About page on desktop. Sections titled How to play, Credits and Disclaimer sit in one centred column. Credits thank dressmakerwiki.site and name the game's makers. The footer shows the data version and app build."
+  mobile={builtAboutMobile}
+  mobileAlt="The About page on a phone, with the same three sections in a single column and the data version and app build at the bottom."
+  caption="The About page. It credits the wiki, names the game's makers and says plainly that this is a fan project."
+/>
+
+## What's Next
+
+- **Tuning.** Play about five challenges per difficulty in the game itself, then retune Chaos.
+- **Launch.** Link preview images, and a post to the Dressmaker community.
+- **Later.** History and daily streaks kept in the browser, and a daily gallery of player screenshots.

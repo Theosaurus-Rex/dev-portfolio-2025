@@ -61,44 +61,38 @@ import builtCopyFailedMobile from '@/assets/images/projects/tailor-made/built-co
 
 ## The Brief
 
-Dressmaker is a game from Cozy Lives and Free Lives, released in September 2026. You run a dress shop. Story clients hand you a card of requirements, and you design a dress to match. The off-rack dresses, the ones you make for the shop floor, have no card at all. You're on your own.
+Dressmaker is a game from Cozy Lives and Free Lives, released in September 2026. In the game, you run a dress shop, and story clients hand you a card of requirements, which you then design a dress to match. The off-rack dresses, the ones you can make for the shop floor to earn extra income, have no card at all - it's essentially a sandbox mode where you can make anything you like.
 
-Tailor-Made makes one up. You get a client, a short brief and a few directions to design towards. You can share a challenge as a link, or play the daily one that everyone gets. There's no backend and no account.
-
-I built it for the Dressmaker community first. It was also a deliberate test: could I run a whole project with AI, from planning to a live site, and still own every decision? I planned this case study on day one and documented the process as it happened. Tickets with something worth showing carried a `case-study` label, so the artefacts were there when I needed them.
+Tailor-Made is designed to give you a handful of restrictions to work within, which can help give you a direction when you don't know what to make. You get a client, a short brief and a few directions to design towards, all injected with personality to make it feel like you're talking to an actual client. You can share a challenge as a link, or play the daily challenge, which refreshes every 24 hours.
 
 ## Research
 
-Dressmaker was a month old when I started, so there was no API and no data dump. I took my data from a fan wiki, dressmakerwiki.site, which was showing build 410 data. I checked its tag counts against a count I made myself, and read other guide sites to see that they described the same kind of card.
+Dressmaker was a month old when I started, so there was no API and no data dump. I took my data from a fan wiki, dressmakerwiki.site, which was showing build 410 data. I checked its tag counts (tags are used in-game to describe materials, styles, etc) against a count I made myself, and read other guide sites to see that they described the same kind of card.
 
-I catalogued all 77 story commission cards in a private note. I wasn't copying them. I wanted their patterns. A card can set a minimum, a ceiling, an avoid, an "only" list, a share or a count. Those patterns became the grammar for Tailor-Made's directions. The card text stays in that private note and nowhere in the app or on this page.
+I catalogued all 77 story commission cards in a private note in order to get a sense of what the average commission shape was. A card can set a minimum, a ceiling, an avoid, an "only" list, a share or a count. Those patterns became the grammar for Tailor-Made's own directions. The card text stays in that private note and nowhere in the app or on this page, since it's the game's IP - everything you see here was created by myself as original content.
 
-The game gets patched often, so I checked build 443, the latest one with any evidence, before freezing the first data set. It added new fabrics and accessories, but no new fabric type, accessory type, style tag or colour. So I kept the data at the level of fabric types. There are 8 of them, against hundreds of individual fabrics. A generator that says "Lace" or "No Silk" doesn't go stale every time a patch adds a print.
+The game gets patched often, so I checked build 443, the latest one with any evidence, before freezing the first data set. It added new fabrics and accessories, but no new fabric type, accessory type, style tag or colour, so I kept the data at the level of fabric types. There are 8 of them, against hundreds of individual fabrics. With how fabrics are categorised, the generator that says "Lace" or "No Silk" doesn't go stale every time a patch adds a print.
 
 ## Dropping the Numbers
 
-The first spec the AI wrote copied the commission cards. A challenge had tag scores, a Quality target, a budget cap and percentages like "at least 40% velvet".
+The first spec the AI wrote copied the commission cards. A challenge had tag scores, a Quality target, a budget cap and percentages like "at least 40% velvet". However, having played the game for upwards of 15 hours at this point, I knew those numbers don't show up on an off-rack dress. You can't see a tag score or a running cost, so a player could never check a challenge like that. 
 
-I knew the game, and I knew those numbers don't show up on an off-rack dress. You can't see a tag score or a running cost. A player could never check a challenge like that. It would only work if they trusted the app.
+I rewrote the scope before beginning to even think about the generator code to ensure we had the problem in the right shape before wasting valuable development time. The new rule is that **every direction must be something you can judge by eye**. That means a style, a fabric, a colour to use or avoid, an accessory to add or avoid, or a small count you can tally. Trim lengths went away too, since nobody measures those on screen.
 
-I rewrote the scope before any generator code existed. The new rule is that **every direction must be something you can judge by eye**. That means a style, a fabric, a colour to use or avoid, an accessory to add or avoid, or a small count you can tally. Trim lengths went too, since nobody measures those on screen.
+The examples below are invented, not taken from the game. The right column shows the kind of direction that replaced the numeric properties, against what we had in the initial spec direction.
 
-The examples below are invented, not taken from the game. The right column shows the kind of direction that replaced hidden numbers. It isn't a one-to-one translation of each row.
-
-| A hidden number | The kind of direction that replaced it |
+| A numeric value | The kind of direction that replaced it |
 |---|---|
 | Keep the cost under a set budget | No Silk |
 | At least 40% velvet | Velvet |
 | A minimum score in the Gothic tag | Gothic |
 | A set length of trim | At least 5 bows |
 
-The spec also had a cut line, so scope couldn't quietly grow. If briefs and difficulty together turned out to be too much, I'd keep the briefs and drop the difficulty dial. I never needed it, but it was written down before I started.
+The spec also had a cut line, so scope couldn't shift as I started working. If briefs and difficulty together turned out to be too much, I'd keep the briefs and drop the difficulty dial (I never needed this, but it helped to have this written down before I started).
 
 ## Flows Before Style
 
-I drew 26 screens and states, each at desktop (1440px) and mobile (390px), as lo-fi frames in Claude Design. That covers the empty generator, every difficulty, a card with some directions ticked, rerolls, the share link, a bad link, the daily page and the About page.
-
-The grey boxes and sketch type are on purpose. These frames only settle layout and flow. I wasn't choosing a look yet.
+I drew 26 screens and states, each at desktop (1440px) and mobile (390px), as lo-fi frames in Claude Design. That covers the empty generator, every difficulty, a card with some directions ticked, rerolls, the share link, a bad link, the daily page and the About page. This stage was about making sure I was capturing the core user flow and all of the information a player would need was accessible somewhere in the app, in an appropriate information architecture.
 
 <Figure src={lofiGeneratorDesktop} alt="Lo-fi wireframe of the desktop generator before any client exists. A New client box on the left has a four-part difficulty selector set to Medium, a Burlap only tick box and a black Generate client button. A dashed box on the right says No client yet." caption="Lo-fi desktop: the generator before anyone has been generated." />
 
@@ -112,7 +106,7 @@ Desktop and mobile get the same attention. On a phone the controls fold away int
 
 ## Four Directions, One Pick
 
-Nuzlocke had a moodboard. This one didn't need it. I already had the palette and the atelier feel in my head: warm, dark and a bit old-fashioned, like a sewing room. So I asked Claude Design for four directions. Each one shows a wordmark, a palette, type and the same client card.
+Normally my design process for visual direction starts with me creating a mood board of various visual inspirations that fit the vibe I'm going for. In this case I didn't need it, because I already had the palette and the atelier feel in my head: warm, dark and a bit old-fashioned, like a sewing room. So I noted the shades and font styles I had in mind, then asked Claude Design to flesh it out by exploring four different visual directions. Each one shows a wordmark, a palette, type and the same client card.
 
 <FigureGrid cols={2}>
   <Figure width="text" src={dirFittingRoom} alt="The Fitting Room direction sheet. A flourished italic Tailor-Made wordmark with a swallowtail tag, a palette of linen, blush, garnet, velvet and night, and the sample client card on soft plum with round reroll buttons." caption="Fitting Room. Soft plum and a flourished italic serif (Cormorant Garamond and Jost)." />
@@ -121,15 +115,13 @@ Nuzlocke had a moodboard. This one didn't need it. I already had the palette and
   <Figure width="text" src={dirRosewood} alt="The Rosewood Label direction sheet. A TM monogram in an oval above the wordmark, a palette of champagne, blush, wine, rosewood and cellar, and the sample card on rosewood with a double-stitched border and a centred name." caption="Rosewood Label. Rosewood and champagne, with a sewn-in garment label card (Instrument Serif and Instrument Sans)." />
 </FigureGrid>
 
-I picked Rosewood Label. It felt warm and cosy, the way the game does. The other three were far too high-fashion for the people who play it. I wanted less Chanel, more local independent boutique. That was an audience call, and it was mine. The sheets were all good, but only one of them looked like it belonged to Dressmaker players.
+I picked Rosewood Label, since it felt warm and cosy, the way the game does, and was the closest to my original vision. The other three were far too high-fashion for the people who play it. I wanted it to feel less like Chanel, and more like a local independent boutique. This is something I've learned is very important as more and more people use automation to figure out visual design - you have to remember that the audience you're designing for might respond differently to the direction that you personally like the best. 
 
-The canvas calls it Rosewood Label. In the repo it became Rosewood Atelier.
+The canvas calls it Rosewood Label, but in the repo I decided to formalise it as Rosewood Atelier.
 
 ## Hi-Fi
 
-I had Claude Design redraw all 26 frames in Rosewood Atelier, then I refined them. The rules of the look are short. It's dark only, with no shadows, and one dusty rose accent carries every button, tick and link.
-
-I didn't eyeball the values from a screenshot. I read the palette, type sizes and component shapes from the canvas markup and wrote them into a design doc, so Claude Code builds to measured tokens and not a guess.
+I had Claude Design redraw all 26 frames in Rosewood Atelier, then I refined them. There's a relatively simple set of guidelines for this due to the simplicity of the app itself - it's dark only, with no shadows, and one dusty rose accent carries every button, tick and link. Once I was happy with how things were looking, I then set up the app to capture the selected visual directions in theme variables and reusable components, so that we were building consistently from the very start.
 
 <DeviceCompare
   desktop={hifiCardDesktop}
@@ -141,17 +133,13 @@ I didn't eyeball the values from a screenshot. I read the palette, type sizes an
 
 ### Decisions win over frames
 
-The hi-fi frames aren't always right. The README for the frames lists where they're wrong, so Claude Code builds to my decisions and not to the drawings.
-
-The clearest case is Chaos. The frame below draws a reroll button on every direction of a six-direction Chaos card. But Chaos can't be rerolled, to keep the difficulty honest. That was my decision, and the drawing got it wrong. The README says so plainly: "Decisions already made win over a frame. Do not build these as drawn."
+The hi-fi frames aren't always right by the time the project is fully built. I find that as I build and test in an actual browser, some things that felt right during the design phase don't work in practice, so iteration is inevitable. The README for the frames lists where they're wrong, so Claude Code built under my decisions and guidance rather than just relying on the wireframes. The clearest example of this is Chaos difficulty. The frame below draws a reroll button on every direction of a six-direction Chaos card, but rerolls on something designed to be deliberately challenging felt like it was defeating the point. 
 
 <Figure src={hifiChaosDesktop} alt="Hi-fi desktop generator with the difficulty set to Chaos. The card for Odette Blackwood, a masked ball client, lists six directions, each with a tick box and a reroll button. The reroll buttons are a mistake in the drawing, since Chaos cards can't be rerolled." caption="Chaos as drawn. Those reroll buttons are wrong, and the built app doesn't have them." />
 
 ## Planning the Build
 
-Before any code, Claude and I wrote a spec, and I rewrote its scope. It has the scope, the non-goals, a cut line and milestones M0 to M6. Everything after that came from it.
-
-Claude drafted the Linear tickets from the spec. I reordered them, edited them and set the priorities. The tickets are titled in build order, with blocking links, and each one names the wireframe frames it builds to. So when an agent picks up a ticket, it knows what to build and what it should look like.
+Before any code, Claude drafted a spec, which I then reviewed and refined, and I rewrote its scope. Claude then drafted the Linear tickets from the spec. I reordered them, edited them and set the priorities. The tickets are titled in build order, with blocking links, and each one names the wireframe frames it builds to, so when an agent picks up a ticket, it knows what to build and what it should look like. I find that blocking links are especially important in this workflow so that priorities and ordering are clear, and we don't end up with half a ticket done in a PR due to a blocker, then having it forgotten down the road.
 
 The agents work under a CLAUDE.md file I set up and kept current. The generator stays pure, share links rebuild forever, layering runs one way and lint enforces it, and desktop and mobile are equals. These are the five hard rules:
 
@@ -171,10 +159,9 @@ The agents work under a CLAUDE.md file I set up and kept current. The generator 
 
 </CodeFile>
 
-The work runs on one ticket, one PR, and I merge. The AI never pushes to main or merges. I asked for PRs under 500 changed lines, with 1,000 as a hard limit. Each one is written in plain English, for someone who isn't an engineer, with a "How to check it" checklist. That checklist is what I work from when I test.
+The work runs on one ticket, one PR, and I merge. I asked for PRs under 500 changed lines, with 1,000 as a hard limit. Each one is written in plain English, for someone who isn't an engineer, with a "How to check it" checklist. That checklist is what I work from when I test.
 
 When tickets depended on each other, I ran small stacks of two or three PRs. I tested each one by hand and passed my feedback straight back to the agents.
-
 In all, it came to 47 PRs in a week (16 to 23 October 2026), from an empty scaffold to a site deployed on Netlify from CI.
 
 ## Design to Code
@@ -201,13 +188,13 @@ A green test suite only proves the tests agree with the code. So I asked for eac
 
 The property tests run thousands of random challenges. A pinned set of 110 challenges guards old share links, so a change that would break a link someone already shared turns the suite red.
 
-One probe first stayed green. The count test checked counts against the code's own range constant, so when I widened the constant, the check widened with it. It could never fail. The test now uses the literal numbers from the design, and the same probe turns it red.
+One probe first stayed green. The count test checked counts against the code's own range constant, so when I widened the constant, the check widened with it, and it could never fail. The test now uses the literal numbers from the design, and the same probe turns it red.
 
-Share links last for a simple reason. A link holds the seed and the reroll history. The generator is seeded and pure, and each data version is frozen once published. So the same link rebuilds the same card, however the app changes after that.
+Share links last because a link holds the seed and the reroll history. The generator is seeded and pure, and each data version is frozen once published, so the same link rebuilds the same card, however the app changes after that.
 
 ## Giving Clients a Voice
 
-This was the trickiest place to step in. Every seed makes a different card, so there's no fixed page of text to proofread. The AI wrote the first lines. I had to find a way to review text that doesn't hold still.
+This was the trickiest place to step in. Every seed makes a different card, so there's no fixed page of text to proofread. The AI wrote the first lines, and I had to find a way to review text that's incredibly dynamic.
 
 **Voices.** Each client gets one of six personalities from the seed: Deadpan, Gushing, Brisk, Grand, Anxious and Theatrical. Each has its own line for every kind of direction. The tables below show the same direction in each voice. I read every line before merging PR #15 (the first three voices) and PR #19 (the other three).
 
@@ -243,7 +230,7 @@ Then I turned each kind of mistake into a test, so the whole kind can't come bac
 - no client line repeats its short line
 - no text contains a straight apostrophe or quote
 
-I didn't only catch the AI's mistakes. I built a way to catch every mistake of that kind.
+I didn't only catch the AI's mistakes, but rather, I built a way to catch every mistake of that kind.
 
 ## As Built
 

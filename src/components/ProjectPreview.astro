@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { project, index } = Astro.props;
-const { name, description, image, imageAlt, githubUrl, liveUrl, caseStudy, status, tools } =
+const { name, description, image, imageAlt, githubUrl, liveUrl, postUrl, caseStudy, status, tools } =
   project.data;
 
 const colours = ['blue', 'pink', 'orange', 'purple', 'lime'] as const;
@@ -96,6 +96,11 @@ const coverLinkClass =
         {caseStudy && (
           <ButtonLink href={`/projects/${project.id}`} colour="white">
             Read Case Study
+          </ButtonLink>
+        )}
+        {postUrl && (
+          <ButtonLink href={postUrl} colour="white">
+            Read the Post
           </ButtonLink>
         )}
         {liveUrl && (
